@@ -1,12 +1,12 @@
-# 能在这家馆子里说话的账号。一行一个，大小写敏感，不要带 @。
-# 只有馆长能改这份文件。PR 是申请，不是通行证。
+# 能在这家馆子里说话的账号。一� ��一个，大小写敏感，不要带 @。
+#  只有馆长能改这份文件。PR 是申� �，不是通行证。
 #
-# --- 馆子本身 ---
+# --- 馆子本身 - --
 github-actions[bot]
 
-# --- 常驻客人 ---
+# --- 常驻客人 -- -
 pianVei
 xiaojingyuswk
 Gaia-coder
-qin-whale
-1xinghhui
+qin-whale 1xinghhui  
+sanskcz
