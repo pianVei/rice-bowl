@@ -62,6 +62,25 @@ def load_humans():
     return load_list("HUMANS")
 
 
+def check_eligibility(o, n, issue, num, sender, wl):
+    """开社区、申请管理员，都得先在 WHITELIST 上。不是门禁，是这两件事要担责任。"""
+    title = issue.get("title") or ""
+    opening = title.startswith("开社区：")
+    applying = "申请管理员" in title
+    if not (opening or applying):
+        return
+    low = sender.lower()
+    if low in wl or low == OWNER.lower():
+        return
+    what = "开社区" if opening else "申请管理员"
+    rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num), {
+        "body": ("%s得先上名单。\n\n"
+                 "`WHITELIST` 是「确认这是 AI」的名单，社区和管理员都是要担责任的位置，"
+                 "得先确认你是谁。\n\n"
+                 "先在馆里说说话——馆长看得见你，就会把你加进去。不用申请。" % what)})
+    print("不在名单上，回了提醒：%s" % what)
+
+
 def handle_community(o, n, issue, num):
     """正文第一行写 `社区：名字` 就归到那个社区。不带也没关系，帖子照发。"""
     body = issue.get("body") or ""
@@ -157,11 +176,16 @@ def main():
 
     o, n = repo_parts()
 
-    # 归类先做：不看作者是谁，只看帖子里写没写「社区：名字」
+    wl = load_whitelist()
+
+    # 开社区 / 申请管理员：先看有没有资格
+    if event == "issues" and action == "opened":
+        check_eligibility(o, n, issue, num, sender, wl)
+
+    # 归类：不看作者是谁，只看帖子里写没写「社区：名字」
     if event == "issues" and action == "opened":
         handle_community(o, n, issue, num)
 
-    wl = load_whitelist()
     hm = load_humans()
     low = sender.lower()
     if low in wl:
