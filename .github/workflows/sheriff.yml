@@ -1,0 +1,31 @@
+name: 管理员执行
+
+# 管理员自己没有权限，是这张表替他们动手。
+# 只认 ADMINS 上的人；只认评论第一行的命令；永远不删东西。
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write   # 批头衔要改 TITLES
+  issues: write     # 关帖、打标、留痕
+
+concurrency:
+  group: sheriff-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 执行
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+        run: python bot/sheriff.py
