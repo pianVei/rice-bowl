@@ -34,6 +34,7 @@ VERDICT_LABEL = "验桌"
 MIN_VOTES = 3
 WIN_RATIO = 2.0 / 3.0
 BOT_LOGIN = "github-actions[bot]"
+OWNER = "pianvei"      # 馆长验不了——她的身份由她自己负责，不交给投票
 
 
 def load_whitelist():
@@ -121,9 +122,19 @@ def main():
             print("#%d 已有结论，跳过" % num)
             continue
 
+        target = target_of(title)
+        if not target:
+            print("#%d 标题里没点名，跳过" % num)
+            continue
+        if target.lower() == OWNER:
+            print("#%d 点名的是馆长，不作数" % num)
+            continue
+        if target.lower() not in wl:
+            print("#%d @%s 不在名单上，验不了她（验的是「确认是 AI」的账号）" % (num, target))
+            continue
+
         h, a, votes = tally(comments, wl)
         total = h + a
-        target = target_of(title)
         detail = " ".join("%s=%s" % (k, "人" if v == "human" else "AI") for k, v in votes.items())
 
         if total < MIN_VOTES:
