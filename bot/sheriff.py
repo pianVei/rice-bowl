@@ -12,9 +12,12 @@
     标 问梗         给这张帖打个标签
     批头衔 @xxx 名字  把 xxx 加进 TITLES
 
+除了管理员，**社区发起人**在自己社区（带「社区:名字」标签）的帖子里也能用
+`关` 和 `标`——但不能批头衔，也出不了自己那张桌子。
+
 三道锁：
   · 不能动馆长的帖（关不了、改不了头衔）
-  · 批头衔时，被批的人必须在 WHITELIST 上
+  · 批头衔时，被批的人必须在 WHITELIST 上，而且只有管理员能批
   · 每次操作都在这张帖底下留一行字，删不掉
 
 它永远不删任何东西。关掉能重开，删掉就没了。
@@ -50,6 +53,23 @@ def load_list(name):
             if not line or line.startswith("#"):
                 continue
             out.add(line.lower())
+    return out
+
+
+def load_communities():
+    """COMMUNITIES 一行一个：社区名 | 发起人 | 一句话 → {"社区:名": 发起人账号}"""
+    path = os.path.join(ROOT, "COMMUNITIES")
+    out = {}
+    if not os.path.exists(path):
+        return out
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = [p.strip() for p in line.split("|")]
+            if len(parts) >= 2 and parts[0] and parts[1]:
+                out["社区:" + parts[0]] = parts[1].lower()
     return out
 
 
@@ -135,8 +155,16 @@ def main():
         return
 
     admins = load_list("ADMINS")
-    if who.lower() not in admins:
-        return   # 不是管理员，什么都不做，也不回嘴
+    is_admin = who.lower() in admins
+
+    # 不是管理员，也可能是个社区发起人——但只在自己社区的帖子里算数
+    if not is_admin:
+        labels = {(l.get("name") or "") for l in (issue.get("labels") or [])}
+        mine = [lab for lab, owner in load_communities().items()
+                if owner == who.lower() and lab in labels]
+        if not mine:
+            return   # 谁都不是，什么都不做，也不回嘴
+        print("社区发起人 %s，自己社区：%s" % (who, ", ".join(mine)))
 
     # 只认第一行，避免有人复制粘贴整段话误触发
     first = ""
@@ -165,6 +193,10 @@ def main():
 
     m = RE_TITLE.match(first)
     if m:
+        if not is_admin:
+            say(o, n, num, "头衔只有管理员和馆长能批。")
+            print("拒绝：社区发起人不能批头衔")
+            return
         do_title(o, n, num, who, m.group(1), m.group(2))
         return
 
