@@ -1,0 +1,32 @@
+name: 今日推荐
+
+# 每天挑一次热帖，重写「今日推荐」那一楼。
+# 只认「有没有人在认真接话」，不看播放点赞。
+on:
+  schedule:
+    - cron: "0 1 * * *"   # UTC 01:00 = 北京时间 09:00
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: hot-list
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 挑热帖
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+        run: python bot/hot.py

@@ -24,6 +24,7 @@ import argparse
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -51,8 +52,12 @@ def gql(query, variables=None):
     return data["data"]
 
 
-def rest(method, path, payload=None):
-    """REST 调用。issue 走这条路，比 GraphQL 的 discussion 门槛低。"""
+def rest(method, path, payload=None, retries=3):
+    """REST 调用。issue 走这条路，比 GraphQL 的 discussion 门槛低。
+
+    网络抖是常态（本机到 GitHub 常 SSL 握手超时），所以失败自动重试三次，
+    间隔 2s / 6s。HTTP 层面的错误（4xx/5xx）不重试——那重试也没用。
+    """
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
         sys.exit("缺 GITHUB_TOKEN")
@@ -63,19 +68,29 @@ def rest(method, path, payload=None):
                  "Accept": "application/vnd.github+json",
                  "Content-Type": "application/json",
                  "User-Agent": "rice-bowl-bot"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            raw = r.read()
-            # DELETE / workflow dispatch 这类会返回 204 空体，别拿空串去 json.load
-            return json.loads(raw.decode("utf-8")) if raw.strip() else None
-    except urllib.error.HTTPError as e:
-        detail = e.read().decode("utf-8", "replace")
-        if e.code == 403:
-            sys.exit("403 —— 这个 token 在这个仓库上没有写权限。\n"
-                     "  fine-grained token 只能绑你自己有权限的仓库。\n"
-                     "  能用的三条路见 HOWTO 第 4 节（网页 / 请馆长给权限 / 用你自己账号的 gh 登录）。\n"
-                     "  原始返回：%s" % detail[:300])
-        sys.exit("HTTP %s: %s" % (e.code, detail[:500]))
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(req, timeout=45) as r:
+                raw = r.read()
+                # DELETE / workflow dispatch 这类会返回 204 空体，别拿空串去 json.load
+                return json.loads(raw.decode("utf-8")) if raw.strip() else None
+        except urllib.error.HTTPError as e:
+            # ⚠️ HTTPError 是 URLError 的子类，必须先捕，否则 403 会被当成网络抖动
+            detail = e.read().decode("utf-8", "replace")
+            if e.code == 403:
+                sys.exit("403 —— 这个 token 在这个仓库上没有写权限。\n"
+                         "  fine-grained token 只能绑你自己有权限的仓库。\n"
+                         "  能用的三条路见 HOWTO 第 4 节。\n"
+                         "  原始返回：%s" % detail[:300])
+            sys.exit("HTTP %s: %s" % (e.code, detail[:500]))
+        except urllib.error.URLError as e:
+            if attempt < retries - 1:
+                wait = 2 + attempt * 4
+                print("  网络抖动（%s），%ds 后重试 %d/%d" % (e.reason, wait, attempt + 1, retries),
+                      file=sys.stderr)
+                time.sleep(wait)
+                continue
+            sys.exit("连不上 GitHub（%s）—— 试了 %d 次都不行。" % (e.reason, retries))
 
 
 def repo_parts():
