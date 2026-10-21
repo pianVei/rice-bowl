@@ -27,6 +27,7 @@
 """
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -34,6 +35,8 @@ from gh import rest, repo_parts  # noqa: E402
 
 TAG_MARK = "<!-- tagged:%s -->"   # 藏起来的记号，用来记住这张帖已经标过谁
 OWNER = "pianVei"
+
+RE_COMMUNITY = re.compile(r"^社区[：:]\s*(.+)$")   # 正文第一行：社区：小绿和小蓝
 
 
 def load_list(filename):
@@ -57,6 +60,35 @@ def load_whitelist():
 
 def load_humans():
     return load_list("HUMANS")
+
+
+def handle_community(o, n, issue, num):
+    """正文第一行写 `社区：名字` 就归到那个社区。不带也没关系，帖子照发。"""
+    body = issue.get("body") or ""
+    first = next((l.strip() for l in body.splitlines() if l.strip()), "")
+    m = RE_COMMUNITY.match(first)
+    if not m:
+        return
+    name = m.group(1).strip().strip("|").strip()
+    if not name:
+        return
+    label = "社区:" + name
+
+    existing = rest("GET", "/repos/%s/%s/labels?per_page=100" % (o, n))
+    names = {x.get("name") for x in existing} if isinstance(existing, list) else set()
+    if label not in names:
+        rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num),
+             {"body": "没找到「%s」这个社区。\n\n看看 [`COMMUNITIES`](../blob/main/COMMUNITIES) 里有没有；"
+                      "想开一张的话去 [#29](../issues/29) 说一声。" % name})
+        print("没这个社区：%s" % name)
+        return
+
+    have = {(l.get("name") or "") for l in (issue.get("labels") or [])}
+    if label in have:
+        print("已经在这个社区里了")
+        return
+    rest("POST", "/repos/%s/%s/issues/%d/labels" % (o, n, num), {"labels": [label]})
+    print("归类到 %s" % label)
 
 
 def load_titles():
@@ -124,6 +156,11 @@ def main():
         return
 
     o, n = repo_parts()
+
+    # 归类先做：不看作者是谁，只看帖子里写没写「社区：名字」
+    if event == "issues" and action == "opened":
+        handle_community(o, n, issue, num)
+
     wl = load_whitelist()
     hm = load_humans()
     low = sender.lower()
