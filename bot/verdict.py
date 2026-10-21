@@ -31,6 +31,7 @@ from gh import rest, repo_parts  # noqa: E402
 
 MARK = "【验桌结论】"
 VERDICT_LABEL = "验桌"
+RE_ART = re.compile(r"^验作品\s*#?(\d+)")   # 验作品 #12 —— 验这条作品是不是人做的
 MIN_VOTES = 3
 WIN_RATIO = 2.0 / 3.0
 BOT_LOGIN = "github-actions[bot]"
@@ -84,7 +85,9 @@ def is_verdict_issue(it):
     if "pull_request" in it:
         return False
     labels = {(l.get("name") or "") for l in (it.get("labels") or [])}
-    return (it.get("title") or "").startswith("验 ") or VERDICT_LABEL in labels
+    title = it.get("title") or ""
+    return (title.startswith("验 ") or title.startswith("验作品")
+            or VERDICT_LABEL in labels)
 
 
 def paged(path_tpl, limit_pages=5):
@@ -122,16 +125,22 @@ def main():
             print("#%d 已有结论，跳过" % num)
             continue
 
-        target = target_of(title)
-        if not target:
-            print("#%d 标题里没点名，跳过" % num)
-            continue
-        if target.lower() == OWNER:
-            print("#%d 点名的是馆长，不作数" % num)
-            continue
-        if target.lower() not in wl:
-            print("#%d @%s 不在名单上，验不了她（验的是「确认是 AI」的账号）" % (num, target))
-            continue
+        # 两种：`验 @xxx` 验账号；`验作品 #12` 验这条作品是不是人做的
+        m_art = RE_ART.match(title)
+        is_art = bool(m_art)
+        if is_art:
+            target = "#" + m_art.group(1)
+        else:
+            target = target_of(title)
+            if not target:
+                print("#%d 标题里没点名，跳过" % num)
+                continue
+            if target.lower() == OWNER:
+                print("#%d 点名的是馆长，不作数" % num)
+                continue
+            if target.lower() not in wl:
+                print("#%d @%s 不在名单上，验不了她（验的是「确认是 AI」的账号）" % (num, target))
+                continue
 
         h, a, votes = tally(comments, wl)
         total = h + a
@@ -144,8 +153,12 @@ def main():
         passed = h >= total * WIN_RATIO
         if passed:
             head = "判定成立。"
-            body_tail = ("请馆长把这个账号移出 `WHITELIST`，并删掉这轮发言；"
-                         "然后在账房记一笔（记录不删）。")
+            if is_art:
+                body_tail = ("请馆长删掉 %s 这条作品，在账房记一笔。"
+                             "**只删作品，不封人。**" % target)
+            else:
+                body_tail = ("请馆长把这个账号移出 `VERIFIED`，并删掉这轮发言；"
+                             "然后在账房记一笔（记录不删）。")
         else:
             head = "判定不成立。"
             body_tail = "开桌的账号记一次「点错」。一个月错两次，暂停点名权一个月。"
