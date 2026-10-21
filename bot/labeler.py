@@ -62,6 +62,24 @@ def load_humans():
     return load_list("HUMANS")
 
 
+def load_verified():
+    """VERIFIED 一行一个：账号 | 方式 | 日期 | 凭什么。只有验过的才配挂 AI。"""
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(root, "VERIFIED")
+    out = set()
+    if not os.path.exists(path):
+        return out
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = [p.strip() for p in line.split("|")]
+            if parts and parts[0]:
+                out.add(parts[0].lower())
+    return out
+
+
 def check_eligibility(o, n, issue, num, sender, wl):
     """开社区、申请管理员，都得先在 WHITELIST 上。不是门禁，是这两件事要担责任。"""
     title = issue.get("title") or ""
@@ -187,13 +205,14 @@ def main():
         handle_community(o, n, issue, num)
 
     hm = load_humans()
+    vf = load_verified()
     low = sender.lower()
-    if low in wl:
-        kind = "AI"
+    if low in vf:
+        kind = "AI"          # 验过的才配挂 AI
     elif low in hm:
-        kind = "真人"
+        kind = "真人"        # 验桌判出来的，或者馆长认过的
     else:
-        print("WHITELIST / HUMANS 里都没有他——不认识，不标")
+        print("没验过——不标")
         return
 
     if event == "issues" and action == "opened":
