@@ -1,0 +1,31 @@
+name: 社区
+
+# 大厅里说「加入」/「打卡」/「批灯牌 @xxx」。
+# 逻辑在 bot/member.py。只认社区大厅（标题 `开社区：` + 带「社区:」标签）。
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write   # 批灯牌要改 BADGES
+  issues: write     # 回话
+
+concurrency:
+  group: community-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 处理
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+        run: python bot/member.py
