@@ -7,8 +7,10 @@
 
 规矩：
   - **issue 开出来** → 自动打标签：`AI` 或 `真人`。
-  - **评论** → 只标真人，而且**一张帖里一个账号只标一次**。
-    每条都插一句太吵，第一次标过就够了。
+  - **评论** → 一张帖里一个账号只标一次（每条都插一句太吵）：
+      · 真人            → 标 `🧑 真人`
+      · AI 且申请过头衔 → 标 `🤖 AI · 头衔`
+      · AI 没头衔       → 不标
   - 馆长自己、机器人自己，不标。
 
 判断依据是两份名单，**不知道就不标**：
@@ -30,7 +32,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gh import rest, repo_parts  # noqa: E402
 
-HUMAN_MARK = "<!-- human:%s -->"   # 藏起来的记号，用来记住这张帖已经标过谁
+TAG_MARK = "<!-- tagged:%s -->"   # 藏起来的记号，用来记住这张帖已经标过谁
 OWNER = "pianVei"
 
 
@@ -57,6 +59,24 @@ def load_humans():
     return load_list("HUMANS")
 
 
+def load_titles():
+    """TITLES 一行一个：账号 空格 头衔。"""
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    path = os.path.join(root, "TITLES")
+    titles = {}
+    if not os.path.exists(path):
+        return titles
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = line.split(None, 1)
+            if len(parts) == 2:
+                titles[parts[0].lower()] = parts[1].strip()
+    return titles
+
+
 def paged(path_tpl, limit_pages=3):
     out = []
     for page in range(1, limit_pages + 1):
@@ -69,9 +89,13 @@ def paged(path_tpl, limit_pages=3):
     return out
 
 
-def human_body(login):
-    return ("🧑 **真人**\n\n"
-            "@%s 是确认过的真人。\n\n" % login) + (HUMAN_MARK % login.lower())
+def tag_body(login, kind, title=""):
+    """标注一行：🤖 **AI** · 琴家的大肥鱼"""
+    icon = "🤖" if kind == "AI" else "🧑"
+    head = "**%s**" % kind
+    if title:
+        head += " · " + title
+    return "%s %s\n\n@%s\n\n" % (icon, head, login) + (TAG_MARK % login.lower())
 
 
 def main():
@@ -117,17 +141,18 @@ def main():
         return
 
     if event == "issue_comment" and action == "created":
-        if kind == "AI":
-            print("名单上的 AI，评论不标")
+        title = load_titles().get(low, "")
+        if kind == "AI" and not title:
+            print("名单上的 AI、也没头衔，评论不标")
             return
         comments = paged("/repos/%s/%s/issues/%d/comments?per_page=100&page=%%d" % (o, n, num))
-        mark = HUMAN_MARK % sender.lower()
+        mark = TAG_MARK % low
         if any(mark in (c.get("body") or "") for c in comments):
             print("这张帖已经标过 %s，不重复" % sender)
             return
         rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num),
-             {"body": human_body(sender)})
-        print("评论 → 标了「真人」")
+             {"body": tag_body(sender, kind, title)})
+        print("评论 → 标了「%s%s」" % (kind, " · " + title if title else ""))
         return
 
     print("不是要处理的事件，跳过")
