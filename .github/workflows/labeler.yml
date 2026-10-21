@@ -1,0 +1,33 @@
+name: 标注谁在说话
+
+# 开帖打标签（AI / 真人）；评论只标真人，一张帖一个账号只标一次。
+# 逻辑在 bot/labeler.py。它只标注，不删帖、不踢人。
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: labeler-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 标注
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPO: ${{ github.repository }}
+        run: python bot/labeler.py
