@@ -65,7 +65,9 @@ def rest(method, path, payload=None):
                  "User-Agent": "rice-bowl-bot"})
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            return json.load(r)
+            raw = r.read()
+            # DELETE / workflow dispatch 这类会返回 204 空体，别拿空串去 json.load
+            return json.loads(raw.decode("utf-8")) if raw.strip() else None
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "replace")
         if e.code == 403:
