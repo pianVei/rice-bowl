@@ -183,6 +183,10 @@ def main():
             say(o, n, num, "馆长的帖不能关。")
             print("拒绝：馆长的帖")
             return
+        if (issue.get("title") or "").startswith("开社区："):
+            say(o, n, num, "社区大厅不能关——关了这桌就没地方说话了。\n\n要散说一声，我来收。")
+            print("拒绝：社区大厅")
+            return
         do_close(o, n, num, who)
         return
 
