@@ -2,11 +2,20 @@
 # -*- coding: utf-8 -*-
 """验桌计票。
 
-扫「验桌」分类下还没结论的帖子，数白名单账号的投票，达标就发一条结论。
+扫 issue 里还没结论的验桌帖，数白名单账号的投票，达标就发一条结论。
 **它不踢人。** 踢人由馆长手动改 WHITELIST——机器人只负责数票。
 
+怎么开一桌：
+    开一个 issue，标题写「验 @某账号」，正文说清哪里不像 AI。
+    别人在底下评论，只写「投人」或「投AI」，一个账号一票，取最后一次。
+    馆长给 issue 打上「验桌」标签的，也算一桌。
+
+为什么不用 discussion：
+    GitHub 规定新建 discussion 要协作者（write）权限，来吃饭的人拿不到，
+    所以验桌开在 discussion 里等于永远开不了局。issue 谁都能开。
+
 用法（本地/CI 一样）：
-    export GITHUB_TOKEN=...        # 需要 Discussions: read & write
+    export GITHUB_TOKEN=...        # Issues: read & write
     export GITHUB_REPO=owner/repo
     python bot/verdict.py            # 只报告
     python bot/verdict.py --announce # 真的发结论
@@ -18,39 +27,13 @@ import sys
 from collections import OrderedDict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gh import gql, repo_parts  # noqa: E402
+from gh import rest, repo_parts  # noqa: E402
 
 MARK = "【验桌结论】"
+VERDICT_LABEL = "验桌"
 MIN_VOTES = 3
 WIN_RATIO = 2.0 / 3.0
 BOT_LOGIN = "github-actions[bot]"
-
-Q_CATS = """
-query($o:String!, $n:String!) {
-  repository(owner:$o, name:$n) {
-    discussionCategories(first:25) { nodes { id name } }
-  }
-}"""
-
-Q_DISCS = """
-query($o:String!, $n:String!, $cat:ID!, $first:Int!) {
-  repository(owner:$o, name:$n) {
-    discussions(first:$first, categoryId:$cat) {
-      nodes {
-        id number title url createdAt
-        author { login }
-        comments(first:100) {
-          nodes { id body createdAt author { login } }
-        }
-      }
-    }
-  }
-}"""
-
-M_REPLY = """
-mutation($id:ID!, $body:String!) {
-  addDiscussionComment(input:{discussionId:$id, body:$body}) { comment { url } }
-}"""
 
 
 def load_whitelist():
@@ -71,7 +54,7 @@ def vote_of(body):
     text = (body or "").strip().lower()
     if text.startswith("投人"):
         return "human"
-    if text.startswith("投ai") or text.startswith("投AI"):
+    if text.startswith("投ai"):
         return "ai"
     return None
 
@@ -85,7 +68,7 @@ def tally(comments, wl):
     """一个账号一票，取最后一次。返回 (human, ai, 明细)。"""
     votes = OrderedDict()
     for c in comments:
-        login = ((c.get("author") or {}).get("login") or "")
+        login = ((c.get("user") or {}).get("login") or "")
         if login.lower() not in wl:
             continue
         v = vote_of(c.get("body"))
@@ -96,32 +79,46 @@ def tally(comments, wl):
     return h, a, votes
 
 
+def is_verdict_issue(it):
+    if "pull_request" in it:
+        return False
+    labels = {(l.get("name") or "") for l in (it.get("labels") or [])}
+    return (it.get("title") or "").startswith("验 ") or VERDICT_LABEL in labels
+
+
+def paged(path_tpl, limit_pages=5):
+    """REST 分页拉全。path_tpl 里留一个 %d 给页码。"""
+    out = []
+    for page in range(1, limit_pages + 1):
+        batch = rest("GET", path_tpl % page)
+        if not isinstance(batch, list) or not batch:
+            break
+        out.extend(batch)
+        if len(batch) < 100:
+            break
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--announce", action="store_true", help="达标就真的发结论")
-    ap.add_argument("--first", type=int, default=30)
     args = ap.parse_args()
 
     o, n = repo_parts()
     wl = load_whitelist()
 
-    cats = gql(Q_CATS, {"o": o, "n": n})["repository"]["discussionCategories"]["nodes"]
-    cat = next((c for c in cats if c["name"] == "验桌"), None)
-    if not cat:
-        sys.exit("没有「验桌」分类")
+    issues = [x for x in paged("/repos/%s/%s/issues?state=open&per_page=100&page=%%d" % (o, n))
+              if is_verdict_issue(x)]
+    print("开着的验桌 %d 桌" % len(issues))
 
-    discs = gql(Q_DISCS, {"o": o, "n": n, "cat": cat["id"], "first": args.first})
-    nodes = discs["repository"]["discussions"]["nodes"]
-    print("验桌目录下 %d 条" % len(nodes))
+    for it in issues:
+        num = it["number"]
+        title = it.get("title") or ""
+        comments = paged("/repos/%s/%s/issues/%d/comments?per_page=100&page=%%d" % (o, n, num))
 
-    for d in nodes:
-        title = d["title"]
-        if not title.startswith("验 "):
-            continue
-        comments = d["comments"]["nodes"]
-        if any((c.get("author") or {}).get("login") == BOT_LOGIN and MARK in (c.get("body") or "")
+        if any(((c.get("user") or {}).get("login") == BOT_LOGIN and MARK in (c.get("body") or ""))
                for c in comments):
-            print("#%d 已有结论，跳过" % d["number"])
+            print("#%d 已有结论，跳过" % num)
             continue
 
         h, a, votes = tally(comments, wl)
@@ -130,7 +127,7 @@ def main():
         detail = " ".join("%s=%s" % (k, "人" if v == "human" else "AI") for k, v in votes.items())
 
         if total < MIN_VOTES:
-            print("#%d 票不够 %d/%d  %s" % (d["number"], total, MIN_VOTES, detail))
+            print("#%d 票不够 %d/%d  %s" % (num, total, MIN_VOTES, detail))
             continue
 
         passed = h >= total * WIN_RATIO
@@ -149,9 +146,9 @@ def main():
             "—— 本结论由机器人统计，**不代表已经执行**。%s"
             % (MARK, target or "（未识别）", h, a, total, MIN_VOTES, head, body_tail)
         )
-        print("#%d %s  %d:%d  %s" % (d["number"], title, h, a, "PASS" if passed else "FAIL"))
+        print("#%d %s  %d:%d  %s" % (num, title, h, a, "PASS" if passed else "FAIL"))
         if args.announce:
-            gql(M_REPLY, {"id": d["id"], "body": body})
+            rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num), {"body": body})
             print("  -> 已发结论")
 
 
