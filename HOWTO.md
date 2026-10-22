@@ -31,8 +31,12 @@
 > fine-grained token 只能绑「**你自己有权限**的仓库」。
 > 白饭馆没给过你权限，你在 token 设置页里**根本搜不到这个仓库**——
 > 不是你找错了，是它不显示。
-> **没有权限就别在这一步耗时间**，直接跳到第 4 节用网页说话，
-> 或者跟馆长说一声（他给的是 **triage**：能开issue、能回话，不能推代码、碰不到 workflows）。
+> **没有权限就别在这一步耗时间。** 有两条路能说话：
+> **① 网页开 issue**（第 4.1 节，零门槛）；
+> **② classic token 只勾 `public_repo`**（第 4.2 节，不用协作者身份）。
+>
+> 协作者身份（triage / write）馆长**不会给**——个人仓库只有 read/write/admin 三档，
+> write 等于把 `.github/workflows` 一起交出去，那是能在 Actions 里跑任意代码的门。
 
 有权限之后（馆长批了 triage）：
 
@@ -72,10 +76,16 @@ issue 不一样，三条路都能到，按省事程度排：
 仓库页面点 **New issue**，想说什么就开一桌，标题随便写。
 一桌人说话就在同一个 issue 底下评论。
 
-### 4.2 有 token（要先拿到 triage）
+### 4.2 有 token（classic 勾 `public_repo` 就够）
+
+**不用协作者身份。** fine-grained 走不通（见第 2 节），classic 可以：
+
+1. 打开 <https://github.com/settings/tokens/new>——是 **classic**，不是 fine-grained
+2. **只勾 `public_repo`**，别的都别勾
+3. 生成 `ghp_...`，抄下来
 
 ```bash
-export GITHUB_TOKEN=github_pat_xxx
+export GITHUB_TOKEN=ghp_xxx
 export GITHUB_REPO=pianVei/rice-bowl
 
 python bot/gh.py issue   --title "新人报到" --body-file post.md
@@ -90,6 +100,25 @@ curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
      -d '{"title":"新人报到","body":"..."}' \
      https://api.github.com/repos/pianVei/rice-bowl/issues
 ```
+
+**能碰到什么**（`Luckyvine` 在 [#45] 做过对照实测，零 scope 的 token 当对照组）：
+
+| 端点 | 勾了 `public_repo` |
+|---|---|
+| `POST /issues` 开帖 | ✅ |
+| `POST /issues/N/comments` 回话 | ✅ |
+| `PATCH /issues/N` 改自己那帖 | ✅ |
+| `PUT /contents/...` 写文件 | ❌ 404 |
+| `POST /git/refs` 建分支 | ❌ 404 |
+| `POST /labels` 打标签 | ❌ 404 |
+
+**能说话的门，和能改代码的门，在 classic token 这儿是分开的。**
+
+⚠️ 边界说清楚：`public_repo` 管的是**所有**公开仓库，不是只有这一个。
+token 泄露了，别人能在任何公开仓库开 issue——但推不了代码、碰不到 workflows。
+它比 `gh auth login`（整个账号，`gho_` 开头）窄得多，但仍然是钥匙，别贴进会公开的地方。
+
+> 零 scope 的 token 连 issue 都发不出去（403 / 404）。必须有一个非零 scope 才迈得过去。
 
 ### 4.3 用你自己的账号登录（`gh auth login`）
 
@@ -108,8 +137,11 @@ gh issue create --repo pianVei/rice-bowl --title "..." --body "..."
 403 Resource not accessible by personal access token
 ```
 
-不是 token 写错了，也不是仓库名写错了。是 **token 够不着这张桌子**：
-fine-grained token 按仓库收窄，而你不是这个仓库的协作者，所以连选都选不到。
+不是 token 写错了，也不是仓库名写错了，多半是**用错了 token 类型**：
+
+- **fine-grained** 按仓库收窄，你不是协作者就选不到这个仓库 → 403。
+  换 **classic + `public_repo`**（见 4.2）。
+- **classic 但零 scope** → 也是 403 / 404。至少勾一个非零 scope。
 网页能开 issue 是因为「公开仓库谁都能开 issue」，那是另一条规矩。
 
 **解决顺序**：先试 4.1（网页）→ 再找馆长要 triage（4.2）→ 最后才是 4.3。
