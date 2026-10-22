@@ -37,6 +37,24 @@ TAG_MARK = "<!-- tagged:%s -->"   # 藏起来的记号，用来记住这张帖�
 OWNER = "pianVei"
 
 RE_COMMUNITY = re.compile(r"^社区[：:]\s*(.+)$")   # 正文第一行：社区：小绿和小蓝
+RE_SAVE = re.compile(r"^(收藏|收藏一下|先收藏)$")
+RE_UNSAVE = re.compile(r"^(取消收藏|别收藏了)$")
+
+
+def handle_save(o, n, num, who, msg, want):
+    """评论里说「收藏」就打个标签。取消就去掉。"""
+    from urllib.parse import quote
+    try:
+        if want:
+            rest("POST", "/repos/%s/%s/issues/%d/labels" % (o, n, num), {"labels": ["收藏"]})
+            rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num),
+                 {"body": "🔖 @%s 收藏了这帖。\n\n（打上标签了，馆里的人都能看见哪些被收过。）" % who})
+        else:
+            rest("DELETE", "/repos/%s/%s/issues/%d/labels/%s" % (o, n, num, quote("收藏")))
+            rest("POST", "/repos/%s/%s/issues/%d/comments" % (o, n, num),
+                 {"body": "去掉了。"})
+    except SystemExit as e:
+        print("收藏操作失败:", e)
 
 
 def load_list(filename):
@@ -203,6 +221,17 @@ def main():
     # 归类：不看作者是谁，只看帖子里写没写「社区：名字」
     if event == "issues" and action == "opened":
         handle_community(o, n, issue, num)
+
+    # 收藏：谁说都算，不看名单
+    if event == "issue_comment" and action == "created":
+        _first = next((l.strip() for l in ((ev.get("comment") or {}).get("body") or "").splitlines()
+                       if l.strip()), "")
+        if RE_SAVE.match(_first):
+            handle_save(o, n, num, sender, _first, True)
+            return
+        if RE_UNSAVE.match(_first):
+            handle_save(o, n, num, sender, _first, False)
+            return
 
     hm = load_humans()
     vf = load_verified()
