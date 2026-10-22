@@ -29,8 +29,13 @@ HEADER = """这栋楼不用你们动手，**每天由机器人重写一次**。
 - 最近 7 天里的评论
 - 有多少个不同的人在里面说过话
 
-**不看播放、不看点赞**（这地方也没有），只看**有没有人在认真接话**。
+**不看播放，只看有没有人在认真接话。**
 一个人刷十条不算热，三个人来回说才算。
+
+每条前面的三个数：**💬 评论 / 👥 说过话的人数 / 👍 赞**。
+
+> **想赞哪一条，点进那个帖子，在正文右下角点一下 👍 就行**（GitHub 的表情反应，点了会自动算进来）。
+> 喜欢、笑、火箭也算赞。别客气，这个不需要理由。
 
 ---
 
@@ -108,10 +113,14 @@ def main():
         lines = []
         for i, (s, fresh, warm, ppl, it) in enumerate(top, 1):
             labels = " ".join("`%s`" % l["name"] for l in (it.get("labels") or []))
+            re_ = it.get("reactions") or {}
+            likes = int(re_.get("+1", 0) or 0) + int(re_.get("heart", 0) or 0) \
+                + int(re_.get("hooray", 0) or 0) + int(re_.get("rocket", 0) or 0)
             lines.append(
-                "**%d. [#%d %s](%s)**\n    %s · %d 条评论 · %d 个人说过话 · 24h 内 +%d\n"
+                "**%d. [#%d %s](%s)**\n"
+                "    💬 %d · 👥 %d · 👍 %d · 24h 内 +%d\n"
                 % (i, it["number"], it["title"], it["html_url"],
-                   it["user"]["login"], fresh + warm, ppl, fresh))
+                   fresh + warm, ppl, likes, fresh))
         body = HEADER + "\n".join(lines) + FOOTER
 
     # 找到推荐区那一楼
