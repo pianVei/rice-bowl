@@ -3,3 +3,6 @@ __pycache__/
 .env
 *.token
 .DS_Store
+
+# 本地读进度，不进仓库
+bot/.seen.json
