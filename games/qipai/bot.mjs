@@ -25,6 +25,19 @@ const BASE = arg('url', 'http://127.0.0.1:8765');
 const DELAY = Number(arg('delay', '250'));
 const WANT_SESSION = arg('session', null);
 
+/* ---------- LLM 模式（--llm） ----------
+ * 用语言模型代替内置引擎出牌。读环境变量：
+ *   LLM_BASE_URL  默认 https://api.deepseek.com/anthropic
+ *   LLM_TOKEN     必填（ant 兼容接口的 key）
+ *   LLM_MODEL     默认 deepseek-v4-flash
+ * 任何一步失败（超时/解析不出/非法出牌）都退回内置引擎，牌局不会卡死。
+ */
+const USE_LLM = args.includes('--llm');
+const LLM_URL = process.env.LLM_BASE_URL || 'https://api.deepseek.com/anthropic';
+const LLM_TOKEN = process.env.LLM_TOKEN || '';
+const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-flash';
+const LLM_TIMEOUT = Number(process.env.LLM_TIMEOUT || '12000');
+
 /* ---------- state normalisation ----------
  * The page (agent.js) sends cards as {id, rank, suit, name} and keeps the
  * mode under rules.mode; the headless harness sends {id, r, s} and mode at
@@ -157,6 +170,67 @@ function decideMahjong(s) {
   return null;
 }
 
+async function decideLLM(s) {
+  const fallback = decide(s);
+  if (!LLM_TOKEN) return fallback;
+  const hand = (s.hand || []).map(c => c.name || cardName(c));
+  const need = s.mode === 'mahjong'
+    ? '返回 {"action":"discard","tileId":"<牌id>"} 或 {"action":"claim","decision":"hu|kong|pass"} 或 {"action":"selfwin"}'
+    : (s.mode === 'guandan'
+        ? '返回 {"action":"play","cardIds":[...]} 或 {"action":"pass"}'
+        : '返回 {"action":"play","cardIds":[...]} 或 {"action":"pass"}；叫分阶段返回 {"action":"bid","value":0-3}');
+  const view = {
+    mode: s.mode, phase: s.phase, seat: s.mySeat, myHand: hand,
+    handIds: (s.hand || []).map(c => c.id),
+    lastPlay: s.lastPlay || s.prev || null, landlord: s.landlord,
+    players: s.players, available: s.available,
+  };
+  const lines = [
+    '你在打牌。看局面，只输出一行 JSON 作为你的动作，不要解释。',
+    '规则：' + need,
+    '局面：' + JSON.stringify(view),
+    '内置引擎会建议：' + JSON.stringify(fallback) + '（不同意就按你的判断来）',
+  ];
+  const prompt = lines.join(String.fromCharCode(10));
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), LLM_TIMEOUT);
+  try {
+    const r = await fetch(LLM_URL.replace(/\/$/, '') + '/v1/messages', {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'content-type': 'application/json', 'x-api-key': LLM_TOKEN, 'authorization': 'Bearer ' + LLM_TOKEN, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({ model: LLM_MODEL, max_tokens: 200, messages: [{ role: 'user', content: prompt }] }),
+    });
+    const j = await r.json();
+    const text = ((j.content || []).map(x => x.text || '').join('') || '');
+    const m = text.match(/\{[\s\S]*?\}/);
+    if (!m) return fallback;
+    const cmd = JSON.parse(m[0]);
+    return legalise(cmd, s) || fallback;
+  } catch (e) {
+    log('  (LLM 失手，回退内置引擎: ' + (e && e.message ? e.message : e) + ')');
+    return fallback;
+  } finally { clearTimeout(timer); }
+}
+
+function legalise(cmd, s) {
+  if (!cmd || !cmd.action) return null;
+  const ids = new Set((s.hand || []).map(c => c.id));
+  if (cmd.action === 'play') {
+    if (!Array.isArray(cmd.cardIds) || !cmd.cardIds.length) return null;
+    if (!cmd.cardIds.every(x => ids.has(x))) return null;
+    return { action: 'play', cardIds: cmd.cardIds };
+  }
+  if (cmd.action === 'pass') return { action: 'pass' };
+  if (cmd.action === 'bid') return { action: 'bid', value: Math.max(0, Math.min(3, Number(cmd.value) || 0)) };
+  if (cmd.action === 'double') return { action: 'double', yes: !!cmd.yes };
+  if (cmd.action === 'claim') return { action: 'claim', decision: String(cmd.decision || 'pass') };
+  if (cmd.action === 'selfwin') return { action: 'selfwin' };
+  if (cmd.action === 'discard') { if (!ids.has(cmd.tileId)) return null; return { action: 'discard', tileId: cmd.tileId }; }
+  if (cmd.action === 'kong') return { action: 'kong', kind: cmd.kind || 'concealed', tileKind: cmd.tileKind };
+  if (cmd.action === 'again') return { action: 'again' };
+  return null;
+}
+
 function decide(s) {
   if (s.mode === 'mahjong') return decideMahjong(s);
   return s.mode === 'guandan' ? decideGuandan(s) : decideDouDizhu(s);
@@ -199,7 +273,7 @@ async function main() {
       : st.actor === st.mySeat && (st.phase === 'playing' || st.phase === 'bidding' || st.phase === 'doubling');
     const handStr = (st.hand || []).map(c => isMj ? (c.name || mj.tileLabel(c.kind)) : cardName(c)).join(' ');
     if (mine) {
-      const cmd = decide(st);
+      const cmd = USE_LLM ? await decideLLM(st) : decide(st);
       if (!cmd) continue;
       log(`[${st.mode}] R${st.round} 座位${st.mySeat} 手牌(${(st.hand || []).length}): ${handStr}`);
       let detail = '';
@@ -247,7 +321,7 @@ async function submit(id, token, revision, cmd, retries) {
   if (r.status === 409 && retries > 0) {
     const st = normState((await api('GET', `/api/sessions/${id}`, null, token)).json);
     if (st && st.revision) {
-      const fresh = decide(st);
+      const fresh = USE_LLM ? await decideLLM(st) : decide(st);
       if (fresh) return submit(id, token, st.revision, fresh, retries - 1);
     }
     return { ok: false, error: 'stale revision' };

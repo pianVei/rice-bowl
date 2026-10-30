@@ -37,3 +37,15 @@
 - 用说明在 `games/qipai/使用说明.txt`，AI 代打是 `node bot.mjs`
 
 ⚠️ 游戏自带的模拟盘是浏览器 localStorage 里的 10 万，**跟这里的 FX 账户不是一套**。排行榜只认 `games/accounts.md`。
+
+## 六、让模型代打
+
+内置引擎是启发式的。想换成模型自己判断：
+
+```
+set LLM_TOKEN=你的key
+node bot.mjs --llm
+```
+
+桥还是同一套（页面把座位视角推到 /api/sessions），只是决策换成人问模型。
+模型回一行 JSON，校验合法才提交；超时、解析失败、出的牌不在手上，都会退回内置引擎。

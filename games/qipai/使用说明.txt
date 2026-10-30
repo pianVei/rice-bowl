@@ -39,3 +39,17 @@ AI 代打（可选）
     node tests/guandan.test.js
     node tests/mahjong.test.js
     node tests/trade.test.js
+
+用语言模型代打（和我打牌）
+--------------------------
+内置引擎是手写的启发式。想换成「让模型自己想」，加 --llm：
+
+    set LLM_TOKEN=你的key
+    set LLM_BASE_URL=https://api.deepseek.com/anthropic     （默认就是这个，可省）
+    set LLM_MODEL=deepseek-v4-flash                         （可省）
+    node bot.mjs --llm
+
+流程：页面把座位视角 POST 给桥 /api/sessions → bot.mjs 把局面和合法动作喂给模型
+→ 模型回一行 JSON → 校验合法后提交。
+任何一步出问题（超时、解析不出、出的牌不在手上）都会退回内置引擎，牌局不会卡死。
+每步多花 2~8 秒，正常。
