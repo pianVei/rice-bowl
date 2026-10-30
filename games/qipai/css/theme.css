@@ -1,0 +1,240 @@
+/* Emerald Tea House — original local artwork, no external fonts or assets.
+ * Load AFTER css/style.css. No body class required.
+ * Keep screen visibility, hand sizing/overlap, card selection transforms,
+ * game positioning and animation behavior owned by style.css and ui.js.
+ * Avatar integration: <img class="avatar avatar-art" src="assets/avatar-human.svg"
+ * alt="人类玩家" width="32" height="32">; use avatar-ai.svg for AI.
+ * Optional: body.theme-felt for a quieter felt-only lobby background.
+ */
+
+:root {
+  color-scheme: dark;
+  --tea-ink: #f4efdf;
+  --tea-muted: #b8c7b7;
+  --tea-gold: #e4c486;
+  --tea-gold-light: #f5dfac;
+  --tea-line: rgba(220, 191, 128, .25);
+  --tea-shadow: 0 16px 42px rgba(2, 14, 11, .3);
+}
+
+html { background: #0b211c; }
+body {
+  color: var(--tea-ink);
+  background-color: #102e26;
+  background-image: linear-gradient(180deg, rgba(5, 22, 18, .12), rgba(5, 22, 18, .55)), url('../assets/teahouse-bg.svg');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+}
+body.theme-felt {
+  background-image: url('../assets/table-felt.svg');
+  background-position: center;
+}
+
+.home-head h1 {
+  font-family: 'Songti SC', 'STSong', 'SimSun', Georgia, serif;
+  color: var(--tea-gold-light);
+  font-weight: 800;
+  text-shadow: 0 2px 2px #10251d, 0 5px 24px rgba(225, 189, 115, .15);
+}
+.home-head p { color: #d1d7bf; }
+.muted, .field-label, .mc-desc, .opt i, .pmeta, .status,
+.combo-tag, .bc-label, .total { color: var(--tea-muted); }
+.panel > .muted { font-size: 13px; line-height: 1.7; }
+.field-label { font-weight: 600; letter-spacing: .06em; }
+
+.panel, .help-box, .settle-box {
+  background: linear-gradient(145deg, rgba(31, 65, 51, .97), rgba(13, 38, 30, .98));
+  border-color: var(--tea-line);
+  box-shadow: inset 0 1px 0 rgba(249, 226, 170, .09), var(--tea-shadow);
+}
+.panel { border-radius: 18px; }
+.room-panel { background: linear-gradient(145deg, rgba(35, 69, 53, .98), rgba(14, 38, 30, .98)); }
+.join-panel { background: linear-gradient(135deg, rgba(25, 54, 42, .98), rgba(13, 35, 28, .98)); }
+
+input, select {
+  color: var(--tea-ink);
+  background: #112e25;
+  border-color: rgba(211, 192, 146, .28);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .13);
+}
+input::placeholder { color: #9cae9c; opacity: 1; }
+select option { color: var(--tea-ink); background: #16392c; }
+input:focus, select:focus { border-color: var(--tea-gold); }
+button:focus-visible, input:focus-visible, select:focus-visible,
+.mode-card:focus-within {
+  outline: 2px solid var(--tea-gold-light);
+  outline-offset: 3px;
+}
+.opt input[type='checkbox'] { accent-color: #d7b578; }
+
+.mode-card {
+  background: linear-gradient(145deg, rgba(228, 215, 174, .065), rgba(228, 215, 174, .015));
+  border-color: rgba(211, 192, 146, .13);
+  box-shadow: inset 0 1px 0 rgba(241, 220, 172, .04);
+  transition: border-color .16s ease, background-color .16s ease;
+}
+.mode-card:has(input:checked) {
+  border-color: #d4b374;
+  background: linear-gradient(130deg, rgba(209, 172, 101, .18), rgba(209, 172, 101, .06));
+  box-shadow: inset 0 0 0 1px rgba(242, 218, 166, .07), 0 3px 12px rgba(0, 0, 0, .1);
+}
+.mode-card:has(input:checked) .mc-title { color: var(--tea-gold-light); }
+.mc-title { letter-spacing: .035em; }
+.opt {
+  background: rgba(215, 220, 185, .045);
+  box-shadow: inset 0 0 0 1px rgba(215, 220, 185, .065);
+}
+
+button {
+  transition: background-color .16s ease, box-shadow .16s ease, filter .16s ease;
+  -webkit-tap-highlight-color: rgba(226, 194, 132, .2);
+}
+.big-btns button, button.ghost, .act-btn, #chat-pop button {
+  background: linear-gradient(180deg, #365346, #233e32);
+  color: var(--tea-ink);
+  box-shadow: inset 0 0 0 1px rgba(223, 206, 158, .22), inset 0 1px 0 rgba(247, 229, 189, .1), 0 3px 6px rgba(0, 0, 0, .14);
+}
+button.primary, .big-btns button.primary, .act-btn.primary {
+  background: linear-gradient(180deg, #f2daa3 0%, #dfbd7c 48%, #cfa464 100%);
+  color: #342813;
+  text-shadow: 0 1px 0 rgba(255, 245, 215, .35);
+  box-shadow: inset 0 0 0 1px rgba(255, 231, 177, .7), inset 0 -2px 0 rgba(119, 79, 31, .22), 0 4px 12px rgba(4, 19, 12, .25);
+}
+.big-btns button i { opacity: .85; }
+.act-btn.noplay { background: linear-gradient(180deg, #29473a, #1b352b); color: #d4ddcd; }
+button:disabled { cursor: default; }
+button.primary:disabled { opacity: .58; }
+button.off { opacity: .6; }
+@media (hover: hover) {
+  button:not(:disabled):hover { filter: brightness(1.09); }
+  .mode-card:hover { border-color: rgba(227, 199, 140, .65); }
+  #chat-pop button:hover { background: #3c5848; }
+}
+button:not(:disabled):active { filter: brightness(.96); }
+
+/* Decorative art is always a background: never covers game information. */
+#screen-game {
+  background-color: #133d31;
+  background-image: url('../assets/table-felt.svg');
+  background-size: cover;
+  background-position: center;
+}
+.chip {
+  color: #e7e6d3;
+  background: linear-gradient(180deg, rgba(15, 42, 32, .94), rgba(11, 33, 25, .94));
+  border-color: rgba(218, 192, 135, .28);
+  box-shadow: inset 0 1px 0 rgba(245, 224, 178, .06);
+  font-variant-numeric: tabular-nums;
+}
+.chip.dim { opacity: .85; }
+.chip.lzchip { border-color: #bc93d6; color: #e7cbfc; }
+.opp {
+  background: linear-gradient(145deg, rgba(12, 37, 29, .88), rgba(10, 32, 26, .67));
+  border-color: rgba(201, 182, 134, .15);
+  box-shadow: inset 0 1px 0 rgba(245, 224, 178, .04), 0 6px 15px rgba(3, 20, 14, .12);
+}
+.opp.turn {
+  border-color: var(--tea-gold);
+  box-shadow: inset 0 0 18px rgba(231, 196, 126, .06), 0 0 0 2px rgba(220, 184, 113, .09), 0 4px 20px rgba(0, 0, 0, .2);
+}
+.pname { color: #f5eedc; }
+.badge { background: rgba(220, 213, 180, .13); color: #e0e5d4; }
+.badge.lord, .tag { background: #5b4b29; color: #ffe1a1; }
+.badge.ally { background: #244e56; color: #c1e9ed; }
+.roster-row { background: rgba(203, 211, 175, .055); box-shadow: inset 0 0 0 1px rgba(210, 193, 147, .09); }
+.code { color: var(--tea-gold-light); text-shadow: 0 2px 16px rgba(225, 185, 112, .12); }
+.say { background: #355646; color: #edf0dc; }
+.say.pass { opacity: 1; background: #244336; color: #c4d2bf; }
+.say.lead { background: #554829; color: #ffe1a1; }
+.combo-preview, .diag-verdict { color: #f0d394; }
+.diag-line { color: #d3dfcc; }
+
+/* Keep all original card dimensions, spacing and rank/suit content. */
+.card {
+  color: #202e2b;
+  background: linear-gradient(135deg, #fffef9 0%, #faf7ed 65%, #efe9d9 100%);
+  border-color: #c7bfa9;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8), 0 2px 0 rgba(6, 23, 17, .2), 0 3px 7px rgba(3, 18, 13, .3);
+}
+.card .cr { font-family: Arial, 'Helvetica Neue', sans-serif; font-weight: 800; }
+.card .cs { font-family: Georgia, 'Times New Roman', serif; }
+.card.red { color: #b52c3b; }
+.card.jk .jk-txt { letter-spacing: .02em; }
+.card.back {
+  background-color: #153d36;
+  background-image: url('../assets/card-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-color: #c3ac78;
+  box-shadow: 0 2px 0 rgba(5, 20, 14, .22), 0 3px 7px rgba(3, 18, 13, .3);
+}
+.card.lz { box-shadow: 0 0 0 2px #b88bd0, 0 3px 8px rgba(34, 12, 48, .38); }
+.card.lz::after { background: #74458e; color: #fff; }
+#my-hand .card.sel {
+  border-color: #e3b868;
+  box-shadow: 0 0 0 2px #ebc582, 0 7px 12px rgba(0, 0, 0, .34);
+}
+#my-hand .card.sel.lz { box-shadow: 0 0 0 2px #ebc582, 0 0 0 4px #b88bd0, 0 7px 12px rgba(0, 0, 0, .34); }
+
+/* Opt-in image avatars; existing emoji spans remain readable until replaced. */
+img.avatar, .avatar-art {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  vertical-align: middle;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .22));
+}
+
+#chat-pop { background: #173629; border-color: var(--tea-line); box-shadow: var(--tea-shadow); }
+.bubble { background: #f4ecd7; color: #23372b; box-shadow: 0 4px 14px rgba(0, 0, 0, .24); }
+#settle-overlay, #help-modal { background: rgba(3, 17, 12, .78); }
+.settle-box { border-color: #c9a767; }
+.settle-box.lost { border-color: #829787; }
+.settle-box h2 { color: var(--tea-gold-light); font-family: 'Songti SC', 'STSong', 'SimSun', Georgia, serif; }
+.settle-box.lost h2 { color: #d7e0d0; }
+.settle-box.won .personal { color: #f0d394; }
+.settle-row { background: rgba(211, 218, 178, .06); font-variant-numeric: tabular-nums; }
+.settle-row.me { outline-color: rgba(228, 196, 134, .55); background: rgba(228, 196, 134, .09); }
+.plus { color: #b2e1a4; }
+.minus { color: #ffb0a4; }
+#help-body h3 { color: var(--tea-gold-light); }
+#help-body p { color: #d5dfce; }
+.lord-banner {
+  background: linear-gradient(180deg, #f1dba8, #caa05f);
+  color: #352915;
+  box-shadow: inset 0 0 0 1px #f6e1b1, 0 8px 32px rgba(0, 0, 0, .35);
+}
+.toast { background: #16372a; border-color: rgba(225, 195, 133, .45); color: #f4ecd7; }
+
+/* Long names/messages wrap instead of hiding information. No hand resizing:
+ * ui.js layoutHand() remains the single owner of live card overlap. */
+.pname, .pmeta, .mc-title, .mc-desc, .opt span, .roster-row,
+.settle-row, .status, .combo-preview, .diag-line, .diag-verdict {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+#center-info { min-width: 0; }
+#my-info { min-width: 0; }
+.bubble { white-space: normal; width: max-content; max-width: min(240px, 75vw); overflow-wrap: anywhere; }
+.toast { max-width: calc(100vw - 32px); overflow-wrap: anywhere; text-align: center; }
+.settle-box { max-height: calc(100dvh - 32px); overflow-y: auto; }
+
+@media (max-width: 720px) {
+  body { background-position: center top; }
+  .panel { box-shadow: inset 0 1px 0 rgba(249, 226, 170, .08), 0 8px 24px rgba(2, 14, 11, .23); }
+  img.avatar, .avatar-art { width: 28px; height: 28px; flex-basis: 28px; }
+}
+@media (max-width: 420px) {
+  #table-top { gap: 4px; }
+  .top-right-btns { gap: 3px; }
+  #table-top button.small { padding-left: 8px; padding-right: 8px; }
+  #center-info { gap: 4px; }
+  .chip { padding-left: 7px; padding-right: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button, .mode-card { transition: none; }
+}

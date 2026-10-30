@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" fill="none">
+  <title>翡翠茶馆 · 深绿绒布暖金牌桌</title>
+  <defs>
+    <radialGradient id="felt" cx=".5" cy=".38" r=".78"><stop stop-color="#286453"/><stop offset=".48" stop-color="#194a3e"/><stop offset="1" stop-color="#092c27"/></radialGradient>
+    <linearGradient id="rim" x1="130" y1="0" x2="1310" y2="1000" gradientUnits="userSpaceOnUse"><stop stop-color="#ead29c" stop-opacity=".48"/><stop offset=".5" stop-color="#b18c4a" stop-opacity=".12"/><stop offset="1" stop-color="#e1be73" stop-opacity=".4"/></linearGradient>
+    <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 1H6M0 4H6" stroke="#e2edce" stroke-opacity=".025"/><path d="M1 0V6M4 0V6" stroke="#051b15" stroke-opacity=".09"/><circle cx="2" cy="2" r=".55" fill="#f0e6ba" fill-opacity=".05"/></pattern>
+    <g id="corner" stroke="#e2c78d" stroke-opacity=".24" stroke-width="1.5"><path d="M0 72V12Q0 0 12 0H72M8 56V18Q8 8 18 8H56"/><path d="M0 32C18 32 32 18 32 0M8 40C26 40 40 26 40 8"/><path d="M24 24 32 32 24 40 16 32Z"/></g>
+  </defs>
+  <rect width="1440" height="1000" fill="url(#felt)"/>
+  <rect width="1440" height="1000" fill="url(#grain)"/>
+  <rect x="24" y="24" width="1392" height="952" rx="108" stroke="#061d19" stroke-opacity=".5" stroke-width="22"/>
+  <rect x="37" y="37" width="1366" height="926" rx="96" stroke="url(#rim)" stroke-width="2"/>
+  <rect x="46" y="46" width="1348" height="908" rx="91" stroke="#cfb983" stroke-opacity=".11"/>
+  <use href="#corner" transform="translate(77 77)"/><use href="#corner" transform="translate(1363 77) rotate(90)"/><use href="#corner" transform="translate(1363 923) rotate(180)"/><use href="#corner" transform="translate(77 923) rotate(270)"/>
+  <g transform="translate(720 485)" stroke="#ddca99" stroke-opacity=".065">
+    <circle r="124"/><circle r="114"/><path d="M0-148 148 0 0 148-148 0ZM0-135 135 0 0 135-135 0Z"/>
+    <path d="M0-64C-12-46-50-25-50-3A28 28 0 0 0-8 21L-16 51H16L8 21A28 28 0 0 0 50-3C50-25 12-46 0-64Z" fill="#ddca99" fill-opacity=".025"/>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <title>电脑玩家 · 黄铜茶馆机器人</title>
+  <defs><linearGradient id="bg" x2="128" y2="128" gradientUnits="userSpaceOnUse"><stop stop-color="#596f70"/><stop offset="1" stop-color="#1c3d42"/></linearGradient><linearGradient id="brass" x1="35" y1="30" x2="93" y2="96" gradientUnits="userSpaceOnUse"><stop stop-color="#f1dfb1"/><stop offset=".45" stop-color="#cfb577"/><stop offset="1" stop-color="#9c8254"/></linearGradient><linearGradient id="body" x1="64" y1="87" x2="64" y2="128" gradientUnits="userSpaceOnUse"><stop stop-color="#7b8d80"/><stop offset="1" stop-color="#304a40"/></linearGradient><clipPath id="circle"><circle cx="64" cy="64" r="59"/></clipPath></defs>
+  <circle cx="64" cy="64" r="63" fill="#17372f"/><circle cx="64" cy="64" r="60" fill="url(#bg)" stroke="#ddc28b" stroke-width="2"/>
+  <g clip-path="url(#circle)">
+    <circle cx="29" cy="27" r="38" fill="#d9d5aa" fill-opacity=".1"/><path d="M24 128V110Q25 91 48 91H80Q103 91 104 110V128Z" fill="url(#body)" stroke="#b7ae88" stroke-width="2"/>
+    <path d="M54 82H74V96H54Z" fill="#a38d61"/><path d="M64 21V34" stroke="#c3ab74" stroke-width="4"/><circle cx="64" cy="19" r="6" fill="#e5cc91"/><circle cx="64" cy="18" r="2.5" fill="#fff0bf"/>
+    <rect x="25" y="49" width="10" height="26" rx="5" fill="#ab925f"/><rect x="93" y="49" width="10" height="26" rx="5" fill="#ab925f"/>
+    <rect x="32" y="33" width="64" height="55" rx="18" fill="url(#brass)" stroke="#f2dfa9" stroke-width="1.5"/>
+    <rect x="39" y="44" width="50" height="30" rx="11" fill="#183c36" stroke="#90784b" stroke-width="1.5"/>
+    <path d="M47 58Q51 51 55 58M73 58Q77 51 81 58" stroke="#d3edc2" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M58 65Q64 69 70 65" stroke="#a6ceb1" stroke-width="2" stroke-linecap="round"/>
+    <path d="M56 80H72" stroke="#786441" stroke-width="2" stroke-linecap="round"/><circle cx="39" cy="39" r="1.5" fill="#816f48"/><circle cx="89" cy="39" r="1.5" fill="#816f48"/>
+    <path d="M47 101 64 110 81 101" stroke="#d2bd8b" stroke-width="2" stroke-linejoin="round"/><rect x="51" y="109" width="26" height="15" rx="5" fill="#1f4036" stroke="#bea978"/>
+    <path d="M59 116H69M64 112V120" stroke="#d8c590" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M34 109V124M94 109V124" stroke="#c6ba91" stroke-opacity=".5" stroke-width="2"/>
+  </g>
+  <circle cx="64" cy="64" r="57" stroke="#ecdbad" stroke-opacity=".28"/>
+</svg>

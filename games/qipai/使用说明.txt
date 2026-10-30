@@ -1,0 +1,41 @@
+﻿棋牌 + 模拟交易 —— 使用说明
+================================
+
+包含玩法：斗地主（经典三人/二人对决/四人2v2/癞子/不洗牌）、掼蛋、国标麻将、模拟炒股与外汇。
+纯静态网页，没有构建步骤，不需要装任何依赖。
+
+怎么玩
+------
+双击「启动.bat」。
+- 机器上有 Node：用 node server.cjs 起服务（推荐，AI 代打和联机功能才完整）
+- 只有 Python：自动退回 python -m http.server 8765（只能单机玩）
+然后浏览器打开 http://127.0.0.1:8765
+
+不想用脚本也可以在这个目录里手动执行：
+    node server.cjs      或      python -m http.server 8765
+
+联网须知
+--------
+联机（创建房间/加入房间）走 WebRTC，握手要用公网信号服务器，
+首次加载还会从 unpkg.com 拉 PeerJS。所以：
+- 单机练习、麻将、模拟交易：完全离线可用
+- 联机：需要能上外网；校园网/公司网常被封 UDP，需要 TURN 中继
+  （配置方法见 README.md 的 "Connectivity / TURN relay" 一节）
+
+模拟交易
+--------
+纯模拟盘：10 万虚拟资金，行情是本地随机生成的，不接任何真实券商，
+界面顶部有固定声明。数据存浏览器 localStorage，可随时重置。
+
+AI 代打（可选）
+---------------
+首页把「你的操作身份」改成 AI，然后在该目录执行：
+    node bot.mjs
+内置引擎毫秒出手，不需要任何外部 API。
+
+测试（可选，需要 Node）
+-----------------------
+    node tests/engine.test.js
+    node tests/guandan.test.js
+    node tests/mahjong.test.js
+    node tests/trade.test.js

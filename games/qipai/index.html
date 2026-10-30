@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>斗地主 Online · Dou Dizhu</title>
+<meta name="description" content="Dou Dizhu (Fight the Landlord) — play online with friends, peer-to-peer, no signup.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#123f27">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="斗地主">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/trade.css">
+<link rel="stylesheet" href="css/agent.css">
+</head>
+<body>
+
+<div id="toast-wrap"></div>
+
+<!-- ===================== HOME ===================== -->
+<section id="screen-home" class="screen active">
+  <header class="home-head">
+    <h1 id="t-title">斗地主 Online</h1>
+    <p id="t-subtitle" class="muted"></p>
+    <div class="head-btns">
+      <button id="btn-bgm" class="ghost small">🎵</button>
+      <button id="btn-snd" class="ghost small">🔊</button>
+      <button id="btn-lang" class="ghost small">EN</button>
+      <button id="btn-help" class="ghost small"></button>
+    </div>
+  </header>
+
+  <div class="panel">
+    <label class="field-label" id="t-name"></label>
+    <input id="inp-name" maxlength="12" autocomplete="off">
+
+    <label class="field-label" for="player-control">你的操作身份</label>
+    <select id="player-control"><option value="human">人类 · 鼠标点牌</option><option value="agent">AI · 结构化读牌与指令操作</option></select>
+    <p class="muted">AI 模式由外部 AI 控制你的座位；空座仍由内置电脑补齐。可创建房间与人类一起玩。</p>
+
+    <label class="field-label" id="t-mode"></label>
+    <div class="mode-grid">
+      <label class="mode-card"><input type="radio" name="mode" value="classic" checked>
+        <span class="mc-title" id="t-mclassic"></span><span class="mc-desc" id="t-mclassic-d"></span></label>
+      <label class="mode-card"><input type="radio" name="mode" value="duel">
+        <span class="mc-title" id="t-mduel"></span><span class="mc-desc" id="t-mduel-d"></span></label>
+      <label class="mode-card"><input type="radio" name="mode" value="team">
+        <span class="mc-title" id="t-mteam"></span><span class="mc-desc" id="t-mteam-d"></span></label>
+      <label class="mode-card"><input type="radio" name="mode" value="guandan">
+        <span class="mc-title" id="t-mguandan"></span><span class="mc-desc" id="t-mguandan-d"></span></label>
+      <label class="mode-card"><input type="radio" name="mode" value="mahjong">
+        <span class="mc-title" id="t-mmahjong"></span><span class="mc-desc" id="t-mmahjong-d"></span></label>
+      <button type="button" class="mode-card trade-card" id="btn-trade">
+        <span class="mc-title" id="t-mtrade"></span><span class="mc-desc" id="t-mtrade-d"></span>
+        <span class="mc-go" id="t-mtrade-go"></span></button>
+    </div>
+
+    <label class="field-label" id="t-options"></label>
+    <div class="opt-grid">
+      <label class="opt"><input type="checkbox" id="opt-laizi">
+        <span><b id="t-olaizi"></b><i id="t-olaizi-d"></i></span></label>
+      <label class="opt"><input type="checkbox" id="opt-noshuffle">
+        <span><b id="t-onoshuffle"></b><i id="t-onoshuffle-d"></i></span></label>
+      <label class="opt"><input type="checkbox" id="opt-doubling" checked>
+        <span><b id="t-odoubling"></b><i id="t-odoubling-d"></i></span></label>
+      <label class="opt opt-base"><span><b id="t-obase"></b></span>
+        <select id="sel-base"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option></select></label>
+    </div>
+
+    <div class="big-btns">
+      <button id="btn-create" class="primary"><b id="t-bcreate"></b><i id="t-bcreate-d"></i></button>
+      <button id="btn-practice"><b id="t-bpractice"></b><i id="t-bpractice-d"></i></button>
+    </div>
+  </div>
+
+  <div class="panel join-panel">
+    <label class="field-label" id="t-join"></label>
+    <div class="join-row">
+      <input id="inp-code" maxlength="4" autocomplete="off" autocapitalize="characters">
+      <button id="btn-join" class="primary"></button>
+    </div>
+    <button id="btn-diag" class="ghost small diag-btn"></button>
+    <div id="diag-out"></div>
+  </div>
+</section>
+
+<!-- ===================== PAPER TRADING ===================== -->
+<section id="screen-trade" class="screen">
+  <div class="trade-wrap">
+    <header class="trade-head">
+      <button id="trade-back" class="ghost small">←</button>
+      <div class="trade-head-txt">
+        <h2 id="t-trade-title">模拟交易</h2>
+        <p id="t-trade-disclaimer" class="trade-disclaimer"></p>
+      </div>
+      <div class="trade-head-btns">
+        <button id="trade-lang" class="ghost small">EN</button>
+        <button id="trade-reset" class="ghost small"></button>
+      </div>
+    </header>
+
+    <div class="trade-stats">
+      <div class="stat"><span class="stat-k" id="t-trade-equity"></span><b id="trade-equity" class="stat-v">—</b></div>
+      <div class="stat"><span class="stat-k" id="t-trade-cash"></span><b id="trade-cash" class="stat-v">—</b></div>
+      <div class="stat"><span class="stat-k" id="t-trade-float"></span><b id="trade-float" class="stat-v">—</b></div>
+      <div class="stat"><span class="stat-k" id="t-trade-realized"></span><b id="trade-realized" class="stat-v">—</b></div>
+    </div>
+
+    <div class="trade-main">
+      <div class="panel trade-left">
+        <div class="trade-tabs">
+          <button type="button" class="chip trade-tab active" data-tab="stock" id="t-trade-stocks"></button>
+          <button type="button" class="chip trade-tab" data-tab="fx" id="t-trade-fx"></button>
+        </div>
+        <div id="trade-list" class="trade-list"></div>
+        <p class="muted trade-note" id="t-trade-note"></p>
+      </div>
+
+      <div class="panel trade-detail">
+        <div class="trade-symbar">
+          <div class="trade-sym-name"><b id="trade-symbol"></b><span id="trade-name" class="muted"></span></div>
+          <div class="trade-quote"><span id="trade-price" class="trade-price"></span><span id="trade-chg" class="trade-chg"></span></div>
+        </div>
+        <div class="trade-chart-box"><canvas id="trade-chart"></canvas></div>
+        <div class="trade-order">
+          <div class="trade-order-top">
+            <label class="field-label" id="t-trade-qty" for="trade-qty"></label>
+            <div class="trade-qty-row">
+              <input id="trade-qty" type="number" min="1" step="1" value="100" inputmode="numeric">
+              <div class="trade-quick" id="trade-quick"></div>
+            </div>
+          </div>
+          <p class="trade-est muted" id="trade-est"></p>
+          <div class="trade-btns">
+            <button id="trade-buy" class="act-btn primary"></button>
+            <button id="trade-sell" class="act-btn"></button>
+          </div>
+          <p class="trade-msg" id="trade-msg" role="status"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="trade-lower">
+      <div class="panel">
+        <h3 class="trade-h" id="t-trade-positions"></h3>
+        <div id="trade-positions" class="trade-positions"></div>
+      </div>
+      <div class="panel">
+        <h3 class="trade-h" id="t-trade-curve"></h3>
+        <div class="trade-chart-box small"><canvas id="trade-equity-chart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 class="trade-h" id="t-trade-log"></h3>
+      <div id="trade-log" class="trade-log"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROOM (waiting) ===================== -->
+<section id="screen-room" class="screen">
+  <div class="panel room-panel">
+    <p class="muted" id="t-rcode"></p>
+    <div class="code-row"><span id="room-code" class="code"></span><button id="btn-copy" class="ghost small"></button></div>
+    <p class="muted" id="room-status"></p>
+    <div id="room-players"></div>
+    <div class="big-btns">
+      <button id="btn-start" class="primary"></button>
+      <button id="btn-leave-room"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GAME ===================== -->
+<section id="screen-game" class="screen">
+  <div id="table">
+    <div id="table-top">
+      <button id="btn-exit-game" class="ghost small">←</button>
+      <div id="center-info"></div>
+      <div class="top-right-btns">
+        <button id="agent-toggle" class="ghost small">人类 / AI</button>
+        <button id="btn-bgm2" class="ghost small">🎵</button>
+        <button id="btn-snd2" class="ghost small">🔊</button>
+        <button id="btn-lang2" class="ghost small">EN</button>
+        <button id="btn-help2" class="ghost small">?</button>
+      </div>
+    </div>
+    <div id="opp-row">
+      <div id="opp-left" class="opp-zone"></div>
+      <div id="table-mid"></div>
+      <div id="opp-right" class="opp-zone"></div>
+    </div>
+    <div id="my-zone">
+      <div id="my-lastplay"></div>
+      <div id="actions"></div>
+      <div id="my-hand"></div>
+      <div id="my-bar">
+        <div id="my-info"></div>
+        <div id="chat-bar"><button id="btn-chat" class="ghost small">💬</button></div>
+      </div>
+    </div>
+  </div>
+  <aside id="agent-panel" class="hidden" aria-label="AI 读牌与操作面板">
+    <div class="agent-heading"><h2>AI 明文读牌</h2><button id="agent-close">切回人类</button></div>
+    <p id="agent-summary" aria-live="polite"></p>
+    <p class="muted">这里只显示你的手牌、公开出牌和其他玩家剩余张数。按牌 ID 操作，无需识图。</p>
+    <div id="agent-cards" aria-label="你的明文手牌"></div>
+    <button id="agent-play" class="primary">出选中的牌</button>
+    <details><summary>可选出牌建议（点击选牌）</summary><p class="muted">建议不是全部合法组合，你也可以自行选择。</p><div id="agent-moves"></div></details>
+    <details><summary>结构化 JSON 数据与 API</summary><button id="agent-copy">复制牌局 JSON</button><textarea id="agent-state" readonly aria-label="牌局 JSON" spellcheck="false"></textarea><p id="agent-endpoint"></p></details>
+    <details><summary>执行 AI JSON 指令</summary><button id="agent-template">填入当前指令模板</button><textarea id="agent-command" aria-label="AI JSON 指令" spellcheck="false" placeholder='{"action":"bid","value":1,"revision":"从牌局数据复制"}'></textarea><button id="agent-execute" class="primary">执行指令</button><p id="agent-feedback" role="status"></p></details>
+  </aside>
+  <div id="chat-pop" class="hidden"></div>
+  <div id="settle-overlay" class="hidden"></div>
+</section>
+
+<!-- ===================== HELP ===================== -->
+<div id="help-modal" class="hidden">
+  <div class="help-box">
+    <div class="help-head"><h2 id="t-help-title"></h2><button id="btn-help-close" class="ghost small">✕</button></div>
+    <div id="help-body"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/music.js"></script>
+<script src="js/cards.js"></script>
+<script src="js/moves.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/guandan.js"></script>
+<script src="js/guandan-game.js"></script>
+<script src="js/mahjong.js"></script>
+<script src="js/mahjong-game.js"></script>
+<script src="js/game.js"></script>
+<script src="js/net.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/trade.js"></script>
+<script src="js/trade-ui.js"></script>
+<script src="js/agent.js"></script>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => { });
+</script>
+</body>
+</html>

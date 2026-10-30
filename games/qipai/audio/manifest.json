@@ -1,0 +1,647 @@
+{
+  "repository": "ZhouWeikuan/DouDiZhu",
+  "commit": "0d84ff6c0bc54dba6ae37955de9ae9307513dc99",
+  "retrieved": "2026-10-29",
+  "authenticity": "Existing game recordings; official Tencent origin and audio redistribution rights are NOT verified. No generated audio.",
+  "assets": [
+    {
+      "id": "Normal",
+      "path": "classic-0d84ff6/Normal/Normal.mp3",
+      "source_path": "code/res/music/Normal.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/music/Normal.mp3",
+      "bytes": 525000,
+      "sha256": "5161b457d5717705aacf37ae639dafd5edd0b5e2dada764e3f22d42317a481d9",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "Exciting",
+      "path": "classic-0d84ff6/Exciting/Exciting.mp3",
+      "source_path": "code/res/music/Exciting.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/music/Exciting.mp3",
+      "bytes": 422182,
+      "sha256": "133eb129dfecab5884a57ea492f0d1142078653f2be345bce3dadb6ffe151df9",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_click",
+      "path": "classic-0d84ff6/fx_click/fx_click.mp3",
+      "source_path": "code/res/sounds/main/click.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/click.mp3",
+      "bytes": 4120,
+      "sha256": "b07100f82bc8d53df1d438dcdaf282bb4e06dd6f59e9958d31d2c2b7eabca290",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_givecard",
+      "path": "classic-0d84ff6/fx_givecard/fx_givecard.mp3",
+      "source_path": "code/res/sounds/main/givecard.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/givecard.mp3",
+      "bytes": 7985,
+      "sha256": "a97736a3421bde63ab231513adff2b88d3b086860393b4a4824a985319d13b01",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_sendcard",
+      "path": "classic-0d84ff6/fx_sendcard/fx_sendcard.mp3",
+      "source_path": "code/res/sounds/main/sendcard.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/sendcard.mp3",
+      "bytes": 61484,
+      "sha256": "388da96405e39b2bb6b35060b2222f7bebc73c1cbee668a689e402be485f5c3b",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_boom",
+      "path": "classic-0d84ff6/fx_boom/fx_boom.mp3",
+      "source_path": "code/res/sounds/main/boom.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/boom.mp3",
+      "bytes": 24285,
+      "sha256": "c4fd1cb11921d3d710cea5a47921659e90786849858ad20fe2b6d7bd6322be0a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_plane",
+      "path": "classic-0d84ff6/fx_plane/fx_plane.mp3",
+      "source_path": "code/res/sounds/main/plane.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/plane.mp3",
+      "bytes": 21047,
+      "sha256": "c3b0237cb28901c0c3a0c81dbb6afc1aceca10fac23f28772e2f69746405cbfa",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_alert",
+      "path": "classic-0d84ff6/fx_alert/fx_alert.mp3",
+      "source_path": "code/res/sounds/main/alert.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/alert.mp3",
+      "bytes": 10703,
+      "sha256": "e58fb603d6ed03d3b800c474ba8e644b754089436dea813d1e334f99d5c83642",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_remind",
+      "path": "classic-0d84ff6/fx_remind/fx_remind.mp3",
+      "source_path": "code/res/sounds/main/remind.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/remind.mp3",
+      "bytes": 10389,
+      "sha256": "15dbd3feed23a77bb40455a69c4a7acc214fec1b779a6fe1a26c87195a34ae52",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_start",
+      "path": "classic-0d84ff6/fx_start/fx_start.mp3",
+      "source_path": "code/res/sounds/main/start.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/start.mp3",
+      "bytes": 32644,
+      "sha256": "24d5680087a5d56e95082447563e8b7d82c37e21bbcdef59189c994de5a343eb",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_win",
+      "path": "classic-0d84ff6/fx_win/fx_win.mp3",
+      "source_path": "code/res/sounds/main/win.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/win.mp3",
+      "bytes": 27143,
+      "sha256": "7968eba50d9d95e5761ee518dfbd6edbfd3c425e6df71175e40eebb791d1b902",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_lose",
+      "path": "classic-0d84ff6/fx_lose/fx_lose.mp3",
+      "source_path": "code/res/sounds/main/lose.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/lose.mp3",
+      "bytes": 29424,
+      "sha256": "17da3d696cb1f9d0aaa4d12ddb518e1e760e977f08b75a087eb1eb66e8e48e02",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "fx_chat",
+      "path": "classic-0d84ff6/fx_chat/fx_chat.mp3",
+      "source_path": "code/res/sounds/main/chat.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/main/chat.mp3",
+      "bytes": 25355,
+      "sha256": "f3b380903f53d09128082236a14bf34d3acdae08368e6ce42402e9ebb0105997",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_101",
+      "path": "classic-0d84ff6/voice_101/voice_101.mp3",
+      "source_path": "code/res/sounds/boy/101.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/101.mp3",
+      "bytes": 8403,
+      "sha256": "25607b4e81623d8a5aff941cdd252a0d48a92f10807f4118339d5bd05a0b53aa",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_102",
+      "path": "classic-0d84ff6/voice_102/voice_102.mp3",
+      "source_path": "code/res/sounds/boy/102.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/102.mp3",
+      "bytes": 8821,
+      "sha256": "2625b5ea8b6dc7e276c67b1ff0bd53f75cf87fa5b39d1f6758b425737cffe0ae",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_103",
+      "path": "classic-0d84ff6/voice_103/voice_103.mp3",
+      "source_path": "code/res/sounds/boy/103.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/103.mp3",
+      "bytes": 7985,
+      "sha256": "425fd845f3772c6930f72ac94c4a848cd61d5c40be0e8250a27c2c73b3eec914",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_104",
+      "path": "classic-0d84ff6/voice_104/voice_104.mp3",
+      "source_path": "code/res/sounds/boy/104.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/104.mp3",
+      "bytes": 9239,
+      "sha256": "4966dd1c7b315a83e223a319dd3c4b067a1a78e575c696ff08f5c46ebb4c9d2d",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_105",
+      "path": "classic-0d84ff6/voice_105/voice_105.mp3",
+      "source_path": "code/res/sounds/boy/105.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/105.mp3",
+      "bytes": 9657,
+      "sha256": "161083b2bdb9dbd7ff7a1b5a28509509a82d90962dc2e9e4d8e8f38c3bb942d8",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_106",
+      "path": "classic-0d84ff6/voice_106/voice_106.mp3",
+      "source_path": "code/res/sounds/boy/106.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/106.mp3",
+      "bytes": 7985,
+      "sha256": "53562b40ec8ff2e167f3b203147d1d417ba841c2edc948c88d05b9f4ebc9374e",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_107",
+      "path": "classic-0d84ff6/voice_107/voice_107.mp3",
+      "source_path": "code/res/sounds/boy/107.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/107.mp3",
+      "bytes": 7985,
+      "sha256": "e92ee0adde73ad2e808cfcba5e467c113cb6c47eb8ee6201ebc52290311d7622",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_108",
+      "path": "classic-0d84ff6/voice_108/voice_108.mp3",
+      "source_path": "code/res/sounds/boy/108.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/108.mp3",
+      "bytes": 7567,
+      "sha256": "a51490af46034b175682aa6a65a711cf08d697c0b55f44154a05e2923481f69c",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_109",
+      "path": "classic-0d84ff6/voice_109/voice_109.mp3",
+      "source_path": "code/res/sounds/boy/109.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/109.mp3",
+      "bytes": 8821,
+      "sha256": "f1301a93a65f935d3454b980e623ffb27c252139fd027d19e8cc6e0c624b199c",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_110",
+      "path": "classic-0d84ff6/voice_110/voice_110.mp3",
+      "source_path": "code/res/sounds/boy/110.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/110.mp3",
+      "bytes": 10075,
+      "sha256": "a03a1826ac1239e9f332524b3308538581ec563bbb72dfad09b6dcaf15d36c41",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_111",
+      "path": "classic-0d84ff6/voice_111/voice_111.mp3",
+      "source_path": "code/res/sounds/boy/111.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/111.mp3",
+      "bytes": 8821,
+      "sha256": "a9ea16be77f999fff61dc9d40f1a31c49e54c63d89f7048bd19f363cb2d1a72a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_112",
+      "path": "classic-0d84ff6/voice_112/voice_112.mp3",
+      "source_path": "code/res/sounds/boy/112.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/112.mp3",
+      "bytes": 9657,
+      "sha256": "c1ba3198d78c0911080965f8f5540bb47da1c72b897e7df9d094723be9bf39cd",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_113",
+      "path": "classic-0d84ff6/voice_113/voice_113.mp3",
+      "source_path": "code/res/sounds/boy/113.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/113.mp3",
+      "bytes": 7985,
+      "sha256": "2fde818e316d92600aa5e8ff1cb246e71df5cccc8c0cc571cae66abd1dacba93",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_114",
+      "path": "classic-0d84ff6/voice_114/voice_114.mp3",
+      "source_path": "code/res/sounds/boy/114.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/114.mp3",
+      "bytes": 12164,
+      "sha256": "90f8a3d5dbdd0edb2f57175d10f39c6267493a0295e336b7af73f2c4e8a65475",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_115",
+      "path": "classic-0d84ff6/voice_115/voice_115.mp3",
+      "source_path": "code/res/sounds/boy/115.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/115.mp3",
+      "bytes": 11746,
+      "sha256": "eabffbd784be26c2eba09cb0fde49f949d4b6fb46016203ad8c4ae25d923ef2a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_201",
+      "path": "classic-0d84ff6/voice_201/voice_201.mp3",
+      "source_path": "code/res/sounds/boy/201.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/201.mp3",
+      "bytes": 10493,
+      "sha256": "bdc16717d9abe57c161e1b6fdd5f63bdfba4c86e9ade4ef954c32e875497ee6e",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_202",
+      "path": "classic-0d84ff6/voice_202/voice_202.mp3",
+      "source_path": "code/res/sounds/boy/202.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/202.mp3",
+      "bytes": 8821,
+      "sha256": "e66622ad7c2693c9d411e159a2c97bd3486ec8a89de5bc123cda9df06f1ef516",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_203",
+      "path": "classic-0d84ff6/voice_203/voice_203.mp3",
+      "source_path": "code/res/sounds/boy/203.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/203.mp3",
+      "bytes": 10075,
+      "sha256": "33e727ba4de0997b5a79670c46318abb1cd2b5caa284fff088955519dd516175",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_204",
+      "path": "classic-0d84ff6/voice_204/voice_204.mp3",
+      "source_path": "code/res/sounds/boy/204.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/204.mp3",
+      "bytes": 12582,
+      "sha256": "59d903e894ed752e396ecc14d140b275a76b83142a8e3af91f118522a70f4e33",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_205",
+      "path": "classic-0d84ff6/voice_205/voice_205.mp3",
+      "source_path": "code/res/sounds/boy/205.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/205.mp3",
+      "bytes": 10911,
+      "sha256": "b26b3da74a3f6499aeb591639f2185934401df667cbee13d61614f5ea791556e",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_206",
+      "path": "classic-0d84ff6/voice_206/voice_206.mp3",
+      "source_path": "code/res/sounds/boy/206.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/206.mp3",
+      "bytes": 10911,
+      "sha256": "7c9e3783b21d257d25f72493e75c2fe2bc26c07aa7f12d1c3950499850555f55",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_207",
+      "path": "classic-0d84ff6/voice_207/voice_207.mp3",
+      "source_path": "code/res/sounds/boy/207.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/207.mp3",
+      "bytes": 9657,
+      "sha256": "5ac5604a027f9a449e0c6699ac5c0488c46ed8e986a9327a689953d47994aa54",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_208",
+      "path": "classic-0d84ff6/voice_208/voice_208.mp3",
+      "source_path": "code/res/sounds/boy/208.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/208.mp3",
+      "bytes": 10911,
+      "sha256": "a671cbe877cbe052bc58b1df07800c6eb277ddb474af1e8f648319133cd60632",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_209",
+      "path": "classic-0d84ff6/voice_209/voice_209.mp3",
+      "source_path": "code/res/sounds/boy/209.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/209.mp3",
+      "bytes": 9657,
+      "sha256": "0270d25e2fa342ea2d6d2a5236c5380860dda151e1ebeffc8e907c19e02a25d4",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_210",
+      "path": "classic-0d84ff6/voice_210/voice_210.mp3",
+      "source_path": "code/res/sounds/boy/210.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/210.mp3",
+      "bytes": 13418,
+      "sha256": "ffffb0e2568d74a2b70445f782581c58f4557508f6d40f4f6b4b7e0e560ca2e0",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_211",
+      "path": "classic-0d84ff6/voice_211/voice_211.mp3",
+      "source_path": "code/res/sounds/boy/211.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/211.mp3",
+      "bytes": 8821,
+      "sha256": "ee75c5c81dbc8e74c2a5837f4f860c6c60ca0daebd8127ea3b2d0d2305849807",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_212",
+      "path": "classic-0d84ff6/voice_212/voice_212.mp3",
+      "source_path": "code/res/sounds/boy/212.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/212.mp3",
+      "bytes": 8821,
+      "sha256": "ce56e2659cc7f429a2d473b5bfcb379e8ca8e41d1cb0252a9ac13d5224213b5f",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_213",
+      "path": "classic-0d84ff6/voice_213/voice_213.mp3",
+      "source_path": "code/res/sounds/boy/213.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/213.mp3",
+      "bytes": 9657,
+      "sha256": "9d72f1a5ccc5d670904f050feb907faf36f9b43016592756dfd861b02a2eec52",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_301",
+      "path": "classic-0d84ff6/voice_301/voice_301.mp3",
+      "source_path": "code/res/sounds/boy/301.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/301.mp3",
+      "bytes": 13000,
+      "sha256": "ec0b86dc1c4e3399e09fda05a6301e135c413813eac694758930cd1c803af385",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_302",
+      "path": "classic-0d84ff6/voice_302/voice_302.mp3",
+      "source_path": "code/res/sounds/boy/302.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/302.mp3",
+      "bytes": 13418,
+      "sha256": "07323ba730a85f629fb4c5706a3e5979b8da23b7b2fb46a250a84215176a3ac6",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_303",
+      "path": "classic-0d84ff6/voice_303/voice_303.mp3",
+      "source_path": "code/res/sounds/boy/303.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/303.mp3",
+      "bytes": 11746,
+      "sha256": "f9f481f33d690ba9719e171fd29170b5f7a41c479122f23d56182c6ad76e3a5a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_304",
+      "path": "classic-0d84ff6/voice_304/voice_304.mp3",
+      "source_path": "code/res/sounds/boy/304.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/304.mp3",
+      "bytes": 12164,
+      "sha256": "45a99130a06f999a5be7c67db74362cbceb165c2eb923738da361421efca4854",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_305",
+      "path": "classic-0d84ff6/voice_305/voice_305.mp3",
+      "source_path": "code/res/sounds/boy/305.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/305.mp3",
+      "bytes": 14254,
+      "sha256": "0df45306017b647a2a04cbff4406450b89f71ec571e69e1eb5c3f811ec748111",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_306",
+      "path": "classic-0d84ff6/voice_306/voice_306.mp3",
+      "source_path": "code/res/sounds/boy/306.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/306.mp3",
+      "bytes": 10911,
+      "sha256": "b72be867c34e3a4a79dce2f575257ef5c4bde5db7ccbf8245f16ffb7e6479951",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_307",
+      "path": "classic-0d84ff6/voice_307/voice_307.mp3",
+      "source_path": "code/res/sounds/boy/307.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/307.mp3",
+      "bytes": 12582,
+      "sha256": "b1a549e4a860b49befb523f57dc5269f56db20e8982b93e021d5c17b837ba988",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_308",
+      "path": "classic-0d84ff6/voice_308/voice_308.mp3",
+      "source_path": "code/res/sounds/boy/308.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/308.mp3",
+      "bytes": 12582,
+      "sha256": "6ca1a55bf4bfe45f9f5a9cfe2c179e1120a0244eb101ce2224c38fc91162472d",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_309",
+      "path": "classic-0d84ff6/voice_309/voice_309.mp3",
+      "source_path": "code/res/sounds/boy/309.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/309.mp3",
+      "bytes": 13418,
+      "sha256": "a70b6cf589090dfc77738f4e49275f9186a0ca9ac6d86ef783822b946693d19d",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_310",
+      "path": "classic-0d84ff6/voice_310/voice_310.mp3",
+      "source_path": "code/res/sounds/boy/310.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/310.mp3",
+      "bytes": 13836,
+      "sha256": "9b5e09f74cf8be32bc1d1c881182042fd59c10a383c61eb5dfee44c5ee5567bd",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_311",
+      "path": "classic-0d84ff6/voice_311/voice_311.mp3",
+      "source_path": "code/res/sounds/boy/311.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/311.mp3",
+      "bytes": 13000,
+      "sha256": "0b551cd1d821472de6b007978bf204d86586a2dce134e0843be48638f0d4f5cc",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_312",
+      "path": "classic-0d84ff6/voice_312/voice_312.mp3",
+      "source_path": "code/res/sounds/boy/312.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/312.mp3",
+      "bytes": 13000,
+      "sha256": "5b399e26c27ca041c021a31e82b4b2e5da4c7a514655a109688de51a3ca0e201",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_313",
+      "path": "classic-0d84ff6/voice_313/voice_313.mp3",
+      "source_path": "code/res/sounds/boy/313.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/313.mp3",
+      "bytes": 12164,
+      "sha256": "02c9115b82ca03033b29cba418a11d0673d3abb94eba11be7026d465e32923d9",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_buyao1",
+      "path": "classic-0d84ff6/voice_buyao1/voice_buyao1.mp3",
+      "source_path": "code/res/sounds/boy/buyao1.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/buyao1.mp3",
+      "bytes": 8821,
+      "sha256": "20784c56b466ab8877c76f40045987c8fab3164c08ba37608e6eb08b7793d350",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_buyao2",
+      "path": "classic-0d84ff6/voice_buyao2/voice_buyao2.mp3",
+      "source_path": "code/res/sounds/boy/buyao2.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/buyao2.mp3",
+      "bytes": 8403,
+      "sha256": "ad3d28f7e44d9a3a8b7cdcbce1996448b37928c350bf14de9d6e6db5bcd5edb8",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_buyao3",
+      "path": "classic-0d84ff6/voice_buyao3/voice_buyao3.mp3",
+      "source_path": "code/res/sounds/boy/buyao3.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/buyao3.mp3",
+      "bytes": 7567,
+      "sha256": "c6b48f1753ac8c72cf49cc39e908fc5cb0e582701a14894917160162ce529e74",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_buyao4",
+      "path": "classic-0d84ff6/voice_buyao4/voice_buyao4.mp3",
+      "source_path": "code/res/sounds/boy/buyao4.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/buyao4.mp3",
+      "bytes": 11746,
+      "sha256": "3bb33f1207f950eac7956bd135d5673b246d8aa41eef4778898da144cfa6e37c",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_feiji",
+      "path": "classic-0d84ff6/voice_feiji/voice_feiji.mp3",
+      "source_path": "code/res/sounds/boy/feiji.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/feiji.mp3",
+      "bytes": 11746,
+      "sha256": "3fee99077da6335dd88bf85c3db1bea0ca86320cc8bf77b023e792ddd1dd700b",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_jiabei0",
+      "path": "classic-0d84ff6/voice_jiabei0/voice_jiabei0.mp3",
+      "source_path": "code/res/sounds/boy/jiabei0.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/jiabei0.mp3",
+      "bytes": 11328,
+      "sha256": "222bf463111ba6572722e906a57334d06ed56b4aa12eebe990a24ef0cd0d3429",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_jiabei1",
+      "path": "classic-0d84ff6/voice_jiabei1/voice_jiabei1.mp3",
+      "source_path": "code/res/sounds/boy/jiabei1.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/jiabei1.mp3",
+      "bytes": 10075,
+      "sha256": "28d2c67d52a295d4e75c6fa5f64c025b2f3554362140126f48aa7afd9d4be7dc",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_liandui",
+      "path": "classic-0d84ff6/voice_liandui/voice_liandui.mp3",
+      "source_path": "code/res/sounds/boy/liandui.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/liandui.mp3",
+      "bytes": 10493,
+      "sha256": "b663f40b1fe37f4b62bcb548b9c2c441f2cc225a6b27d752b2a7ccea39ded851",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_noorder",
+      "path": "classic-0d84ff6/voice_noorder/voice_noorder.mp3",
+      "source_path": "code/res/sounds/boy/noorder.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/noorder.mp3",
+      "bytes": 9657,
+      "sha256": "873b19bd9521eb890c67a0e0e842a95b317c9eabf9d92f502cfb5add9f09010c",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_order",
+      "path": "classic-0d84ff6/voice_order/voice_order.mp3",
+      "source_path": "code/res/sounds/boy/order.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/order.mp3",
+      "bytes": 11746,
+      "sha256": "dc1ea8db3f10cdfa45a17fe73d755b07fb31f35552295f2f37d2836bde6eb2ce",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_sandaiyi",
+      "path": "classic-0d84ff6/voice_sandaiyi/voice_sandaiyi.mp3",
+      "source_path": "code/res/sounds/boy/sandaiyi.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/sandaiyi.mp3",
+      "bytes": 16344,
+      "sha256": "c7d0bc86cbf2691fc368874a5ebd4f4d7996ed146b60374fd77247dae9a72f0a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_sandaiyidui",
+      "path": "classic-0d84ff6/voice_sandaiyidui/voice_sandaiyidui.mp3",
+      "source_path": "code/res/sounds/boy/sandaiyidui.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/sandaiyidui.mp3",
+      "bytes": 18434,
+      "sha256": "e9bd3a08af082cc93085a6dda84999c6f08a347a68771fd534d9aa4a93998e08",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_shunzi",
+      "path": "classic-0d84ff6/voice_shunzi/voice_shunzi.mp3",
+      "source_path": "code/res/sounds/boy/shunzi.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/shunzi.mp3",
+      "bytes": 13000,
+      "sha256": "8188c5824f56d8d8efa488de7ec095c9da4ac2a472f6818409491ed433f51b46",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_sidaier",
+      "path": "classic-0d84ff6/voice_sidaier/voice_sidaier.mp3",
+      "source_path": "code/res/sounds/boy/sidaier.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/sidaier.mp3",
+      "bytes": 12164,
+      "sha256": "592da68df423b776764433656987c9f613712cb031973df47483d3a65f2f6602",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_sidailiangdui",
+      "path": "classic-0d84ff6/voice_sidailiangdui/voice_sidailiangdui.mp3",
+      "source_path": "code/res/sounds/boy/sidailiangdui.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/sidailiangdui.mp3",
+      "bytes": 16762,
+      "sha256": "bf45a6ab6ac3fd3c3669f33b550e6235f578ebba5fa055a0eb1f3841861d0d16",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_wangzha",
+      "path": "classic-0d84ff6/voice_wangzha/voice_wangzha.mp3",
+      "source_path": "code/res/sounds/boy/wangzha.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/wangzha.mp3",
+      "bytes": 13000,
+      "sha256": "778b9534698e77b79817c851ef3491084cb6c125ab11e9603686b24814998793",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    },
+    {
+      "id": "voice_zhadan",
+      "path": "classic-0d84ff6/voice_zhadan/voice_zhadan.mp3",
+      "source_path": "code/res/sounds/boy/zhadan.mp3",
+      "source_url": "https://raw.githubusercontent.com/ZhouWeikuan/DouDiZhu/0d84ff6c0bc54dba6ae37955de9ae9307513dc99/code/res/sounds/boy/zhadan.mp3",
+      "bytes": 8821,
+      "sha256": "0528704114b3cb3a1d0e5577eca022e561459dfdbab4459079004a3105a3160a",
+      "audio_license": "UNVERIFIED - repository availability is not an audio license"
+    }
+  ]
+}

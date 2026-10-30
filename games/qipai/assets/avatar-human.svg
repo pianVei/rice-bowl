@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <title>人类玩家 · 茶馆来客</title>
+  <defs><linearGradient id="bg" x2="128" y2="128" gradientUnits="userSpaceOnUse"><stop stop-color="#729586"/><stop offset="1" stop-color="#234c40"/></linearGradient><linearGradient id="coat" x1="64" y1="85" x2="64" y2="128" gradientUnits="userSpaceOnUse"><stop stop-color="#335f54"/><stop offset="1" stop-color="#163a32"/></linearGradient><clipPath id="circle"><circle cx="64" cy="64" r="59"/></clipPath></defs>
+  <circle cx="64" cy="64" r="63" fill="#17372f"/><circle cx="64" cy="64" r="60" fill="url(#bg)" stroke="#ddc28b" stroke-width="2"/>
+  <g clip-path="url(#circle)">
+    <circle cx="92" cy="31" r="39" fill="#d9d5aa" fill-opacity=".12"/><path d="M13 118Q21 86 48 85H79Q111 90 116 128H12Z" fill="url(#coat)"/>
+    <path d="M53 74H75V94L64 105 53 94Z" fill="#d9a37c"/><path d="M49 88 64 104 55 112 41 93M79 88 64 104 73 112 88 94" fill="#aeb89a"/>
+    <ellipse cx="39" cy="59" rx="6" ry="9" fill="#e5b48b"/><ellipse cx="89" cy="59" rx="6" ry="9" fill="#e5b48b"/>
+    <path d="M39 42Q40 22 64 22 90 22 90 48V63Q87 84 64 88 42 83 39 63Z" fill="#edc49d"/>
+    <path d="M36 53Q28 23 51 18 65 10 82 22 99 29 91 56L83 49 80 34Q57 48 42 40L42 55Z" fill="#28342c"/><path d="M43 32Q59 20 77 27" stroke="#566053" stroke-width="3" stroke-linecap="round"/>
+    <path d="M47 52 55 50M73 50 81 52" stroke="#4b4032" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="52" cy="59" rx="2.5" ry="3.5" fill="#25352e"/><ellipse cx="77" cy="59" rx="2.5" ry="3.5" fill="#25352e"/>
+    <path d="M63 59 60 67H65" stroke="#bf8c68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M56 74Q64 80 73 73" stroke="#a16b51" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="47" cy="68" rx="6" ry="3" fill="#d99578" fill-opacity=".45"/><ellipse cx="82" cy="68" rx="6" ry="3" fill="#d99578" fill-opacity=".45"/>
+    <path d="M64 105V128" stroke="#d5bc80" stroke-opacity=".65"/><circle cx="69" cy="115" r="2" fill="#d8bf83"/>
+  </g>
+  <circle cx="64" cy="64" r="57" stroke="#ecdbad" stroke-opacity=".28"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="186" height="258" viewBox="0 0 186 258" fill="none">
+  <title>翡翠茶馆 · 原创双向对称扑克牌背</title>
+  <defs>
+    <linearGradient id="felt" x1="0" y1="0" x2="186" y2="258" gradientUnits="userSpaceOnUse"><stop stop-color="#254f49"/><stop offset=".5" stop-color="#123c37"/><stop offset="1" stop-color="#092b29"/></linearGradient>
+    <linearGradient id="gold" x1="22" y1="20" x2="164" y2="238" gradientUnits="userSpaceOnUse"><stop stop-color="#f0d99c"/><stop offset=".45" stop-color="#b58b4e"/><stop offset=".7" stop-color="#e6ca89"/><stop offset="1" stop-color="#967344"/></linearGradient>
+    <pattern id="weave" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M6 0 12 6 6 12 0 6Z" stroke="#c7b57d" stroke-opacity=".13" stroke-width=".7"/><circle cx="6" cy="6" r=".9" fill="#dfc58a" fill-opacity=".18"/></pattern>
+    <g id="sprig" stroke="url(#gold)" stroke-width="1.4"><path d="M38 82C35 61 45 42 66 34"/><path d="M39 66C25 65 27 51 28 47 39 51 42 57 39 66Z"/><path d="M42 54C42 43 50 39 56 38 55 48 48 53 42 54Z"/><path d="M47 45C38 43 37 33 40 28 47 32 49 38 47 45Z"/></g>
+  </defs>
+  <rect width="186" height="258" rx="17" fill="#f0e6ca"/>
+  <rect x="5" y="5" width="176" height="248" rx="13" fill="url(#felt)"/>
+  <rect x="10" y="10" width="166" height="238" rx="10" fill="url(#weave)" stroke="url(#gold)" stroke-width="1.5"/>
+  <path d="M34 17H152Q152 34 169 34V224Q152 224 152 241H34Q34 224 17 224V34Q34 34 34 17Z" stroke="url(#gold)" stroke-opacity=".8"/>
+  <path d="M93 26 158 129 93 232 28 129Z" fill="#163e37" fill-opacity=".82" stroke="url(#gold)"/>
+  <path d="M93 39 150 129 93 219 36 129Z" stroke="#c4aa6b" stroke-opacity=".35"/>
+  <use href="#sprig"/><use href="#sprig" transform="translate(186 258) rotate(180)"/>
+  <use href="#sprig" transform="translate(186 0) scale(-1 1)"/><use href="#sprig" transform="translate(0 258) scale(1 -1)"/>
+  <circle cx="93" cy="129" r="40" fill="#12362f" stroke="url(#gold)" stroke-width="2"/>
+  <circle cx="93" cy="129" r="34" stroke="url(#gold)" stroke-width=".8"/>
+  <path d="M93 98 101 115 119 121 104 134 108 152 93 143 78 152 82 134 67 121 85 115Z" stroke="url(#gold)" stroke-width="1.5"/>
+  <path d="M93 110 104 129 93 148 82 129Z" fill="url(#gold)"/>
+  <path d="M93 65 97 72 93 79 89 72ZM93 179 97 186 93 193 89 186Z" fill="url(#gold)"/>
+  <circle cx="23" cy="23" r="2" fill="#d7ba7b"/><circle cx="163" cy="23" r="2" fill="#d7ba7b"/><circle cx="23" cy="235" r="2" fill="#d7ba7b"/><circle cx="163" cy="235" r="2" fill="#d7ba7b"/>
+</svg>
