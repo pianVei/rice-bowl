@@ -6,3 +6,4 @@ __pycache__/
 
 # 本地读进度，不进仓库
 bot/.seen.json
+games/qipai/我的key.txt
