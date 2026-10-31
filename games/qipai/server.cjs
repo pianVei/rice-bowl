@@ -37,6 +37,31 @@ const server=http.createServer(async(req,res)=>{
     const match=p.match(/^\/api\/sessions\/([a-f0-9-]+)(?:\/(actions|results)(?:\/([a-f0-9-]+))?)?$/);
     // Local session discovery: lets an AI client (bot.mjs) attach to the
     // page that is currently in "AI 身份" mode. localhost-only by design.
+    // ---- 战报：本地记分，不进仓库 ----
+    if(p==='/api/record' && req.method==='POST'){
+      const b=await body(req);
+      const rec={at:new Date().toISOString(),mode:b.mode||'?',round:b.round||0,winner:b.winner,
+        players:b.players||[],deltas:b.deltas||null,matchOver:!!b.matchOver,n:b.n||3};
+      await fs.promises.appendFile(path.join(ROOT,'_results.jsonl'),JSON.stringify(rec)+'\n').catch(()=>{});
+      return json(res,201,{ok:true});
+    }
+    if(p==='/api/record/summary' && req.method==='GET'){
+      const txt=await fs.promises.readFile(path.join(ROOT,'_results.jsonl'),'utf8').catch(()=> '');
+      const rows=txt.split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch(e){return null}}).filter(Boolean);
+      const by={};
+      for(const r of rows){
+        const ds=r.deltas;
+        (r.players||[]).forEach((pl,i)=>{
+          const k=pl.name||('座位'+i);
+          by[k]=by[k]||{name:k,games:0,delta:0,wins:0};
+          by[k].games++;
+          if(Array.isArray(ds) && typeof ds[i]==='number'){by[k].delta+=ds[i]; if(ds[i]>0)by[k].wins++;}
+          else if(r.winner===i){by[k].wins++;}
+        });
+      }
+      const list=Object.values(by).sort((a,b)=>b.delta-a.delta);
+      return json(res,200,{total:rows.length,players:list});
+    }
     if(p==='/api/sessions' && req.method==='GET'){
       const now=Date.now();
       const list=[];
@@ -74,4 +99,12 @@ const server=http.createServer(async(req,res)=>{
   } catch(e){if(!res.headersSent)json(res,400,{error:e.message});else res.end();}
 });
 setInterval(()=>{for(const [id,s] of sessions)if(Date.now()-s.updated>3600000)sessions.delete(id);},60000).unref();
+server.on('error',e=>{
+  if(e && e.code==='EADDRINUSE'){
+    console.error('端口 '+PORT+' 被占了。先关掉占用的程序，或者换端口：');
+    console.error('  set PORT=8766 && node server.cjs');
+    process.exit(1);
+  }
+  throw e;
+});
 server.listen(PORT,'127.0.0.1',()=>console.log('DOUDIZHU READY http://127.0.0.1:'+PORT));

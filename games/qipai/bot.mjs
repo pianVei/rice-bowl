@@ -306,6 +306,15 @@ async function main() {
           log(`[${st.mode}] 第${st.round}局结束 胜家:座位${r.winner} deltas=${JSON.stringify(r.deltas)}`);
         }
       }
+      // 战报：把这一局的输赢记到本地记分板（/api/record），服务器没开也不影响打牌
+      if (r) {
+        const payload = {
+          mode: st.mode, round: st.round, winner: r.winner, deltas: r.deltas || null,
+          matchOver: !!(r.matchOver || st.matchOver),
+          players: (st.players || []).map(x => ({ seat: x.seat, name: x.name, computer: !!x.computer })),
+        };
+        api('POST', '/api/record', payload, token).catch(() => {});
+      }
       if (st.available && st.available.again && lastAgainRev !== st.revision && !(r && r.matchOver) && !st.matchOver) {
         lastAgainRev = st.revision;
         const res = await submit(id, token, st.revision, { action: 'again' }, 1);
