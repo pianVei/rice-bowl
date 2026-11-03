@@ -22,6 +22,7 @@ import ctypes
 import glob
 import os
 import re
+import subprocess
 import sys
 import time
 from ctypes import wintypes
@@ -81,6 +82,21 @@ SLOT_OF = {(4, 4): 16, (3, 4): 12, (6, 8): 12, (2, 4): 8, (5, 4): 20,
            (7, 8): 14, (8, 4): 32, (12, 8): 24, (9, 8): 18, (3, 8): 6}
 
 
+def _audio_dur(dirpath):
+    """读同目录音频时长（ffprobe），读不到返回 0。"""
+    for ext in (".ogg", ".mp3", ".wav"):
+        for f in glob.glob(os.path.join(dirpath, "*" + ext)):
+            try:
+                out = subprocess.run(
+                    ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                     "-of", "csv=p=0", f],
+                    capture_output=True, text=True, timeout=15)
+                return float(out.stdout.strip() or 0)
+            except Exception:
+                return 0
+    return 0
+
+
 def parse_tja(path, course=None):
     """-> (events, bpm, course_name, header)
 
@@ -136,7 +152,10 @@ def parse_tja(path, course=None):
         slots = SLOT_OF.get(measure, measure[0] * 16 // measure[1])
         dur = (measure[0] / measure[1]) * 4.0 * 60.0 / bpm
         step = dur / max(slots, 1)
-        for seg in line.split(","):
+        segs = line.split(",")
+        if segs and segs[-1].strip() == "":
+            segs = segs[:-1]          # 行尾逗号不是一小节
+        for seg in segs:
             for idx, ch in enumerate(seg):
                 ts = t + idx * step
                 if ch == "1":
@@ -163,6 +182,17 @@ def parse_tja(path, course=None):
     pick = next(((c, ns) for c, ns in blocks if (c or "").lower() == want), None)
     if pick is None:
         pick = max(blocks, key=lambda x: len(x[1]))
+    # 有的 .tja 里混着长度完全不同的谱（塔、双人、加长版）。
+    # 有音频就挑「总时长最接近音频」的那一段，这比按难度名字猜准。
+    ad = _audio_dur(os.path.dirname(path))
+    if ad > 5 and len(blocks) > 1:
+        def end_of(ns):
+            return ns[-1][0] if ns else 0
+        # 只在「按难度挑的那段明显对不上音频」时才换，别把 Oni 换成了 Easy
+        if abs(end_of(pick[1]) - ad) / ad > 0.2:
+            best = min(blocks, key=lambda cb: abs(end_of(cb[1]) - ad))
+            if abs(end_of(best[1]) - ad) < abs(end_of(pick[1]) - ad) * 0.5:
+                pick = best
     used, ns = pick
     ns.sort()
     # OFFSET 是音频相对谱面的偏移；谱面时间 - offset = 歌里的时间
